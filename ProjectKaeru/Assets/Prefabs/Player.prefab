@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 895446792800387144}
   - component: {fileID: 8273311361126527353}
   m_Layer: 8
-  m_Name: Player SuperScript
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,12 +257,25 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 2103
   m_GroundCheck: {fileID: 895446793271014313}
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
   m_AttackSpeed: 0.01
   dashSpeed: 20
+  fallMultiplier: 3
+  lowJumpMultiplier: 5
+  wallGrabPoint: {fileID: 6140246176250638282}
+  wallJumpTime: 0.1
+  animator: {fileID: 895446792800387142}
+  runSpeed: 32
+  startDashTime: 0.1
+  dashRate: 3
+  walljumpVertical: 14
+  walljumpHorizontal: 100
+  m_WhatIsWall:
+    serializedVersion: 2
+    m_Bits: 2103
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -281,19 +294,6 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls: []
-  fallMultiplier: 3
-  lowJumpMultiplier: 5
-  wallGrabPoint: {fileID: 6140246176250638282}
-  wallJumpTime: 0.1
-  animator: {fileID: 895446792800387142}
-  runSpeed: 32
-  startDashTime: 0.1
-  dashRate: 3
-  walljumpVertical: 14
-  walljumpHorizontal: 100
-  m_WhatIsWall:
-    serializedVersion: 2
-    m_Bits: 55
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
