@@ -44,11 +44,12 @@ GameObject:
   - component: {fileID: 895446792800387138}
   - component: {fileID: 895446792800387137}
   - component: {fileID: 895446792800387142}
+  - component: {fileID: 895446792800387140}
+  - component: {fileID: 895446792800387141}
   - component: {fileID: 895446792800387143}
   - component: {fileID: 895446792800387144}
-  - component: {fileID: 8273311361126527353}
   m_Layer: 8
-  m_Name: Player SuperScript
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +198,7 @@ Animator:
   m_GameObject: {fileID: 895446792800387166}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6aecb21814c03e045a1094e8f739cfec, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5857900f99149064d8ec9e0c7c588937, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -206,6 +207,74 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &895446792800387140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895446792800387166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907329edc8dce7f4c8a88879e80dde8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_JumpForce: 700
+  m_CrouchSpeed: 0
+  m_MovementSmoothing: 0.01
+  m_AirControl: 1
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 55
+  m_GroundCheck: {fileID: 895446793271014313}
+  m_CeilingCheck: {fileID: 895446794362688460}
+  m_CrouchDisableCollider: {fileID: 895446792800387138}
+  m_AttackSpeed: 0.01
+  dashSpeed: 20
+  OnLandEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 895446792800387141}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnLanding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCrouchEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 5
+  wallGrabPoint: {fileID: 6140246176250638282}
+  wallJumpTime: 0.2
+--- !u!114 &895446792800387141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895446792800387166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd98056ee71b4204cb9e55005b67a48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 895446792800387140}
+  animator: {fileID: 895446792800387142}
+  runSpeed: 32
+  startDashTime: 0.1
+  dashRate: 3
+  wallGrabPoint: {fileID: 6140246176250638282}
+  wallJumpTime: 0.1
+  m_WhatIsWall:
+    serializedVersion: 2
+    m_Bits: 1591
 --- !u!114 &895446792800387143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,61 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89773134445062e4d9eea4b999bca1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8273311361126527353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895446792800387166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb5416c0318b8c348b7a06f020e9af92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JumpForce: 700
-  m_CrouchSpeed: 0
-  m_MovementSmoothing: 0.01
-  m_AirControl: 1
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 55
-  m_GroundCheck: {fileID: 895446793271014313}
-  m_CeilingCheck: {fileID: 895446794362688460}
-  m_CrouchDisableCollider: {fileID: 895446792800387138}
-  m_AttackSpeed: 0.01
-  dashSpeed: 20
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8273311361126527353}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnLanding
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnCrouchEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  fallMultiplier: 3
-  lowJumpMultiplier: 5
-  wallGrabPoint: {fileID: 6140246176250638282}
-  wallJumpTime: 0.1
-  animator: {fileID: 895446792800387142}
-  runSpeed: 32
-  startDashTime: 0.1
-  dashRate: 3
-  walljumpVertical: 14
-  walljumpHorizontal: 100
-  m_WhatIsWall:
-    serializedVersion: 2
-    m_Bits: 55
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0

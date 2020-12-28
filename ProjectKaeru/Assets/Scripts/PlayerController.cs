@@ -25,16 +25,7 @@ public class PlayerController : MonoBehaviour
 
 	public float dashSpeed;
 
-	[Header("Events")]
-	[Space]
-
-	public UnityEvent OnLandEvent;
-
-	[System.Serializable]
-	public class BoolEvent : UnityEvent<bool> { }
-
-	public BoolEvent OnCrouchEvent;
-	private bool m_wasCrouching = false;
+	
 
 	public float fallMultiplier = 2.5f;
 	public float lowJumpMultiplier = 2f;
@@ -64,6 +55,17 @@ public class PlayerController : MonoBehaviour
 
 
 	[SerializeField] private LayerMask m_WhatIsWall;
+
+	[Header("Events")]
+	[Space]
+
+	public UnityEvent OnLandEvent;
+
+	[System.Serializable]
+	public class BoolEvent : UnityEvent<bool> { }
+
+	public BoolEvent OnCrouchEvent;
+	private bool m_wasCrouching = false;
 
 	private void Start()
 	{
@@ -101,7 +103,7 @@ public class PlayerController : MonoBehaviour
 			crouch = false;
 		}
 
-		if (GetComponent<PlayerCombat>().isAttacking)
+		if (GetComponent<PlayerCombat>().isAttacking && !isGrabbing)
 		{
 			attacking = true;
 		}
