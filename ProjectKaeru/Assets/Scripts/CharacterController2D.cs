@@ -134,7 +134,7 @@ public class CharacterController2D : MonoBehaviour
 				{
 					wallJumpCounter = wallJumpTime;
 
-					m_Rigidbody2D.velocity = new Vector2(move * -210f, m_JumpForce / 50);
+					m_Rigidbody2D.velocity = new Vector2(move * -110f, m_JumpForce / 50);
 					m_Rigidbody2D.gravityScale = gravityStore;
 					Flip();
 				}
