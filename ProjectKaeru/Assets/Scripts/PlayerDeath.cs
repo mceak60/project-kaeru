@@ -16,15 +16,15 @@ public class PlayerDeath : MonoBehaviour
     }*/
 
     private void OnTriggerEnter2D(Collider2D col)
-    {   if(isDead)
+    {
+        if (!isDead)
         {
-            return;
-        }
-        isDead = true;
-        if (col.gameObject.CompareTag("Death"))
-        {
-            Destroy(gameObject);
-            LevelManager.instance.Respawn();
+            if (col.gameObject.CompareTag("Death"))
+            {
+                isDead = true;
+                Destroy(gameObject);
+                LevelManager.instance.Respawn();
+            }
         }
     }
 }
