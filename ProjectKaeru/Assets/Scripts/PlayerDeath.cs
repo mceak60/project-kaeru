@@ -4,27 +4,22 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    private bool isDead = false;
 
-    /*private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Death"))
         {
             Destroy(gameObject);
-            LevelManager.instance.Respawn();
         }
-    }*/
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!isDead)
+        if (col.gameObject.CompareTag("Death"))
         {
-            if (col.gameObject.CompareTag("Death"))
-            {
-                isDead = true;
-                Destroy(gameObject);
-                LevelManager.instance.Respawn();
-            }
+            Destroy(gameObject);
+            LevelManager.instance.Respawn();
         }
     }
 }
