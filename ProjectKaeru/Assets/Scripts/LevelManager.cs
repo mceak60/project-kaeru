@@ -14,7 +14,12 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
+        GameObject player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
+        Transform playerTransform = player.GetComponent<Transform>();
+
+        CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
+        vcam.Follow = playerTransform;
+        vcam.Follow = playerTransform;
     }
 
     public void Respawn()

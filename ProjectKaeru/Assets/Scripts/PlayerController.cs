@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour
 
 	public void OnLanding()
 	{
+		m_Grounded = true;
 		animator.SetBool("IsJumping", false);
 	}
 
