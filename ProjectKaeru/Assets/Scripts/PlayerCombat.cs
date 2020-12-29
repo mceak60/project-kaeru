@@ -20,7 +20,6 @@ public class PlayerCombat : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             isAttacking = false;
-            //animator.SetBool("IsAttacking", false);
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Attack();

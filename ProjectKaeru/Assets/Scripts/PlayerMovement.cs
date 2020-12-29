@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsCrouching", false);
             }
 
-            if (!controller.getGrounded() && grounded != false)
+            if (!controller.getGrounded() && grounded == true)
             {
                 grounded = false;
                 animator.SetBool("IsGrounded", false);

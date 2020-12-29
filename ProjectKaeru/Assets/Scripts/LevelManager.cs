@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
     }
 
     public void Respawn()
