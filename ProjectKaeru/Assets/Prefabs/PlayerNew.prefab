@@ -256,7 +256,7 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 2103
+    m_Bits: 55
   m_GroundCheck: {fileID: 895446793271014313}
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
@@ -274,7 +274,7 @@ MonoBehaviour:
   walljumpHorizontal: 100
   m_WhatIsWall:
     serializedVersion: 2
-    m_Bits: 2103
+    m_Bits: 55
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:

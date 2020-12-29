@@ -152,13 +152,14 @@ public class PlayerController : MonoBehaviour
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 		animator.SetBool("IsCrouching", crouch);
 		animator.SetBool("IsGrounded", m_Grounded);
+		if (!m_Grounded)
+			Debug.Log("Yeah");
 		animator.SetBool("IsDashing", dashing);
 		animator.SetBool("IsGrabbing", isGrabbing);
 	}
 
 	public void OnLanding()
 	{
-		m_Grounded = true;
 		animator.SetBool("IsJumping", false);
 	}
 
