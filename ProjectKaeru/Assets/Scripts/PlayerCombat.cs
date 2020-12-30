@@ -15,6 +15,10 @@ public class PlayerCombat : MonoBehaviour
     public bool isAttacking = false;
 
     // Update is called once per frame
+    /*
+     * If the player's attack is not on cooldown then see if the player has pressed the attack button and switch to the attacking animation
+     * This code needs to be updated to check if the player is already preforming an action such as dashing or wall grabbing and if so, it should not let them attack -Bren
+     */
     void Update()
     {
         if (Time.time >= nextAttackTime)
@@ -44,6 +48,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    //This makes the hitbox appear in the scene editor
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null)

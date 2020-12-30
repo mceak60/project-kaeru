@@ -23,49 +23,47 @@ public class PlayerController : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
-	public float dashSpeed;
+	public float dashSpeed; //What to set the velocity of the player to for the dash
 
-	
+	public float fallMultiplier = 2.5f; //Increases the gravity of the player when they're falling to give them a weightier feeling
+	public float lowJumpMultiplier = 2f; // Increases the gravity of the player when they tap space, allowing them to shorthop
 
-	public float fallMultiplier = 2.5f;
-	public float lowJumpMultiplier = 2f;
-
-	public Transform wallGrabPoint;
-	private bool canGrab, isGrabbing;
-	private float gravityStore;
-	public float wallJumpTime = .1f;
-	private float wallJumpCounter;
+	public Transform wallGrabPoint; // The point at which the player checks if they are against a wall they can grab
+	private bool canGrab, isGrabbing; // Whether or not the player can grab the wall infront of them and whether or not they're grabbing it
+	private float gravityStore; // Since we freeze gravity on the player when they're grabbing a wall, this stores the value we want to return gravity to
+	public float wallJumpTime = .1f; //How long the player loses control after walljumping, increasing this number causes the player to have a longer walljump that they can't cancel out of
+	private float wallJumpCounter; // Used to disable player movement between walljumps
 
 	public Animator animator;
-	public float runSpeed = 100f;
+	public float runSpeed = 100f; //How fast the player moves
 
-	float horizontalMove = 0f;
-	bool jump = false;
-	bool crouch = false;
-	bool attacking = false;
-	bool dashing = false;
+	private float horizontalMove = 0f; // How fast the player is moving. This is -1, 0, or 1 on keyboard or -1 - 1 on controller
+	private bool jump = false; //Whether or not the player has triggered a jump, this is only used to tell the move method to apply vertical force to the player, not whether or not the jump animation is playing
+	private bool crouch = false; // Whether or not the player is crouching, also controls whether or not the crouch animation is playing
+	private bool attacking = false; // Whether or not the attack animation is playing
+	private bool dashing = false; // Whether or not the player is dashing
 
-	private float dashTime;
-	public float startDashTime;
-	public float dashRate = 1f;
-	float nextDashTime = 0f;
+	private float dashTime; // How long it has been since the player has last dashed
+	public float startDashTime; // How long a dash lasts(?)
+	public float dashRate = 1f; // Works with startDashTime to determine how often the player can dash
+	private float nextDashTime = 0f; // When the player can dash again
 
-	public float walljumpVertical = 50f;
-	public float walljumpHorizontal = 50f;
+	public float walljumpVertical = 50f; // How much vertical force is applied to the player when they walljump
+	public float walljumpHorizontal = 50f; // How much horizontal force is applied to the player when they walljump
 
 
-	[SerializeField] private LayerMask m_WhatIsWall;
+	[SerializeField] private LayerMask m_WhatIsWall; // What is considered a wall the player can jump off of
 
 	[Header("Events")]
 	[Space]
 
-	public UnityEvent OnLandEvent;
+	public UnityEvent OnLandEvent; // Method called when the player lands, I probably don't need it anymore
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
 
-	public BoolEvent OnCrouchEvent;
-	private bool m_wasCrouching = false;
+	public BoolEvent OnCrouchEvent; // Method called when the player crouches
+	private bool m_wasCrouching = false; // Whether or not the player just finished crouching
 
 	private void Start()
 	{
@@ -87,6 +85,10 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
+		/*
+		 * Most of the code in this part is just checking for the player's input and setting the corresponding value accordingly if that action can be taken
+		 */
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
 		if (Input.GetButtonDown("Jump") && !attacking)
@@ -112,6 +114,9 @@ public class PlayerController : MonoBehaviour
 			attacking = false;
 		}
 
+		/*
+		 * This code allows the player to dash if its not on cooldown
+		 */
 		if (Time.time >= nextDashTime)
 		{
 			if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
@@ -122,11 +127,15 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-
+		/*
+		 * This code handles the walljump
+		 */
 		canGrab = Physics2D.OverlapCircle(wallGrabPoint.position, .2f, m_WhatIsWall);
 		isGrabbing = false;
+		//If we're against a wall we can grab and not on the floor...
 		if (canGrab && !m_Grounded)
 		{
+		    //...and we're holding a direction then grab the wall
 			if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
 			{
 				isGrabbing = true;
@@ -134,6 +143,8 @@ public class PlayerController : MonoBehaviour
 		}
 		if (isGrabbing == true)
 		{
+			//If we're grabbing the wall and we press jump then we preform a walljump
+			//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
 			if (Input.GetButtonDown("Jump"))
 			{
 				isGrabbing = false;
@@ -148,16 +159,17 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("IsGrabbing", false);
 		}
 
-
+		/*
+		 * This is where most of the values are passed to the animator if that applies
+		 */
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 		animator.SetBool("IsCrouching", crouch);
 		animator.SetBool("IsGrounded", m_Grounded);
-		if (!m_Grounded)
-			Debug.Log("Yeah");
 		animator.SetBool("IsDashing", dashing);
 		animator.SetBool("IsGrabbing", isGrabbing);
 	}
 
+	//I'm pretty sure this is a relic of when the two scripts were seperate and I can move this code into where I update m_IsGrounded but it works and I'm too lazy deal with the possibility that it doesn't work -Bren
 	public void OnLanding()
 	{
 		animator.SetBool("IsJumping", false);
@@ -165,9 +177,13 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-
+		//Applies most of the physics to the player
 		Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
+
+		//We set jump to false right after move so we don't continue applying the upward force
 		jump = false;
+
+		//Updates the time keeping values for dashing if that applies
 		if (dashing)
 		{
 			if (dashTime <= 0)
@@ -202,8 +218,12 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump, bool attack, bool dash, bool grab)
 	{
+		// this statements prevents the player from moving during the first part of the walljump, its how a lott of games do it
 		if (wallJumpCounter <= 0)
 		{
+			/*
+			 * This applies all the physics of the walljump
+			 */
 			if (grab)
 			{
 
@@ -221,12 +241,14 @@ public class PlayerController : MonoBehaviour
 					//Flip();
 				}
 			}
-
 			else
 			{
 				m_Rigidbody2D.gravityScale = gravityStore;
 			}
 
+			/*
+			 * This part applies the dash force
+			 */
 			if (dash)
 			{
 				if (m_FacingRight)
@@ -238,6 +260,9 @@ public class PlayerController : MonoBehaviour
 					m_Rigidbody2D.velocity = Vector2.left * dashSpeed;
 				}
 			}
+			/*
+			 * This part handles all the other movement in general
+			 */
 			else
 			{
 				//only control the player if grounded or airControl is turned on
@@ -273,6 +298,7 @@ public class PlayerController : MonoBehaviour
 						}
 					}
 
+					//If we're on the ground we reduce our speed while attacking
 					if (attack && m_Grounded)
 					{
 						move *= m_AttackSpeed;
@@ -304,11 +330,12 @@ public class PlayerController : MonoBehaviour
 					m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 				}
 
-
+				//If the player is falling we add more gravity to them than normal because it feels better
 				if (m_Rigidbody2D.velocity.y < 0)
 				{
 					m_Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
 				}
+				//If the player just jumped but let go of the jump key we increase the gravity applied to them allowing them to control their jump height better
 				else if (m_Rigidbody2D.velocity.y > 0 && !Input.GetButton("Jump"))
 				{
 					m_Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;

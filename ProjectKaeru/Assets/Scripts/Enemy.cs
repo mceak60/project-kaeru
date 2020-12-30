@@ -8,12 +8,14 @@ public class Enemy : MonoBehaviour
 
     public int maxHealth = 100;
     int currentHealth;
+
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
     }
 
+    //Update the enemies damage, play a stagger animation, and kill them if they're health drops below 0
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -26,6 +28,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //Plays the death animation and disables the enemies collider so the player can no longer be blocked by the enemies collider. 
+    //However, doing this causes the enemy to fall through the floor -Bren
     void Die()
     {
 

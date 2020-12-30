@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject playerCamera;
 
+    //When the game starts, create a new player and have the camera follow it
     private void Awake()
     {
         instance = this;
@@ -22,6 +23,7 @@ public class LevelManager : MonoBehaviour
         vcam.Follow = playerTransform;
     }
 
+    //Creates a new player at the respawn point and has the camera follow them
     public void Respawn()
     {
         GameObject player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
