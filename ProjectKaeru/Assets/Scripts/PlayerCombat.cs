@@ -4,55 +4,55 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-
-    public GameObject hitbox;
-    public BoxCollider2D collider;
-    public Animator animator;
-    public LayerMask enemyLayers;
     
+    public Animator animator;
+    public Transform attackPoint;
     public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
     public int attackDamage = 40;
     public float attackRate = 1f;
     float nextAttackTime = 0f;
     public bool isAttacking = false;
 
     // Update is called once per frame
+    /*
+     * If the player's attack is not on cooldown then see if the player has pressed the attack button and switch to the attacking animation
+     * This code needs to be updated to check if the player is already preforming an action such as dashing or wall grabbing and if so, it should not let them attack -Bren
+     */
     void Update()
     {
-        hitbox = GameObject.Find("Hitbox"); //gets the hitbox component
-        
-
         if (Time.time >= nextAttackTime)
         {
             isAttacking = false;
-<<<<<<< Updated upstream
-=======
-            hitbox.GetComponent<BoxCollider2D>().enabled = false; //disables the hitbox until attack
-            //Debug.Log(hitbox.GetComponent<BoxCollider2D>().enabled); //debug
-
->>>>>>> Stashed changes
-            //animator.SetBool("IsAttacking", false);
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                
-                //Attack();
+                Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
                 isAttacking = true;
-                hitbox.GetComponent<BoxCollider2D>().enabled = true; //enables hitbox before animation
-              //  Debug.Log(hitbox.GetComponent<BoxCollider2D>().enabled); //debug
-
             }
-            //Play animation + enable hitbox
-            
+            //Play animation
             animator.SetBool("IsAttacking", isAttacking);
         }
     }
 
-
-    void OnDrawGizmosSelected() //this is probably useless now lol (delete later)
+    void Attack()
     {
-        if (hitbox == null)
+ 
+        //Detect enemies
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        //Damage enemies
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+        }
+    }
+
+    //This makes the hitbox appear in the scene editor
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
             return;
-        Gizmos.DrawWireCube(hitbox.transform.position, collider.size);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

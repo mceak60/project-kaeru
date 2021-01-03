@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Death
-  - PlayerAttack
+  - Background
   layers:
   - Default
   - TransparentFX
@@ -18,7 +18,7 @@ TagManager:
   - Player
   - Enemy
   - Death
-  - 
+  - Background
   - 
   - 
   - 
