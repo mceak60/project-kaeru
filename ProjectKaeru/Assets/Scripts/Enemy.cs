@@ -38,5 +38,13 @@ public class Enemy : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
     }
-   
+   private void OnTriggerEnter2D(Collider2D other) //registers player hit
+    {
+        if(other.gameObject.tag == "PlayerAttack") //registers player hitbox (otherwise would register ALL colliders)
+        {
+            Debug.Log("Hit!");
+            this.TakeDamage(34); //set value, change later
+        }
+        
+    }
 }
