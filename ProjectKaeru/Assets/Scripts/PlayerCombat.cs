@@ -25,12 +25,9 @@ public class PlayerCombat : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             isAttacking = false;
-<<<<<<< Updated upstream
-=======
             hitbox.GetComponent<BoxCollider2D>().enabled = false; //disables the hitbox until attack
             //Debug.Log(hitbox.GetComponent<BoxCollider2D>().enabled); //debug
 
->>>>>>> Stashed changes
             //animator.SetBool("IsAttacking", false);
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
