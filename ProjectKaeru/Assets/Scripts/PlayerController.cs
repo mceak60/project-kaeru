@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
 	public BoolEvent OnCrouchEvent; // Method called when the player crouches
 	private bool m_wasCrouching = false; // Whether or not the player just finished crouching
 
+	private bool isWalljumping = false;
+
 	private void Start()
 	{
 		dashTime = startDashTime;
@@ -147,10 +149,11 @@ public class PlayerController : MonoBehaviour
 			//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
 			if (Input.GetButtonDown("Jump"))
 			{
+				isWalljumping = true;
 				isGrabbing = false;
 				jump = true;
 				animator.SetBool("IsJumping", true);
-				Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
+				Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
 			}
 
 		}
@@ -178,7 +181,10 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		//Applies most of the physics to the player
-		Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
+		if (!isWalljumping)
+		{
+			Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
+		}
 
 		//We set jump to false right after move so we don't continue applying the upward force
 		jump = false;
@@ -238,6 +244,8 @@ public class PlayerController : MonoBehaviour
 					else
 						m_Rigidbody2D.velocity = new Vector2(-1 * walljumpHorizontal, walljumpVertical);
 					m_Rigidbody2D.gravityScale = gravityStore;
+
+					isWalljumping = false;
 					//Flip();
 				}
 			}
