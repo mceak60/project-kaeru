@@ -8,7 +8,11 @@ public class GrappleHook : MonoBehaviour
     [SerializeField] private LayerMask grappleable;
     public Transform grapplePointUL;
     public Transform grapplePointBR;
-    public SpringJoint2D grapple;
+    public Rigidbody2D rb;
+
+    private Collider2D lastClosest;
+    public 
+    //public SpringJoint2D grapple;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,7 @@ public class GrappleHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     void FixedUpdate()
@@ -39,13 +44,37 @@ public class GrappleHook : MonoBehaviour
                 }
             }
 
-            //Highlight closest target
+            if (lastClosest == null)
+            {
+                lastClosest = closestPoint;
+            }
+            else if (lastClosest != closestPoint)
+            {
+                lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
+                lastClosest = closestPoint;
+            }
+            closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
 
+            Vector2 angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);//Vector2.Distance(closestPoint.gameObject.transform.position, gameObject.transform.position);
+            angle.Normalize();
             //If click then activate grapple
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                //Debug.Log("Here");
+                rb.AddForce(angle * 100);
+            }
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 Debug.Log("Here");
-                grapple.connectedBody = closestPoint.gameObject.GetComponent<Rigidbody2D>();
+                rb.AddForce(angle * 1000);
+            }
+        }
+        else
+        {
+            if (lastClosest != null)
+            {
+                lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
+                lastClosest = null;
             }
         }
     }
