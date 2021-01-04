@@ -314,6 +314,7 @@ MonoBehaviour:
   grapplePointUL: {fileID: 4594697175735091220}
   grapplePointBR: {fileID: 2333692492317940585}
   rb: {fileID: 895446792800387139}
+  controller: {fileID: 8273311361126527353}
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3762522083913043818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.292, y: 7, z: 0}
+  m_LocalPosition: {x: -10, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 895446792800387136}

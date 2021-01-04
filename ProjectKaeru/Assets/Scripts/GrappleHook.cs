@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+/* TODO:
+ * If the player crosses over the hitbox of the target we want to preserve the last angle from right before they cross over the target and use that as an angle to launch the player real high
+ * It also kinda doesn't work with horizontal velocity for some reason
+ */
 public class GrappleHook : MonoBehaviour
 {
     [SerializeField] private LayerMask grappleable;
@@ -11,7 +16,12 @@ public class GrappleHook : MonoBehaviour
     public Rigidbody2D rb;
 
     private Collider2D lastClosest;
-    public 
+    public PlayerController controller;
+
+    private bool grapple = false;
+    private bool wasGrapple = false;
+
+    private Vector2 angle;
     //public SpringJoint2D grapple;
     // Start is called before the first frame update
     void Start()
@@ -22,7 +32,15 @@ public class GrappleHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            grapple = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0) && grapple)
+        {
+            grapple = false;
+            wasGrapple = true;
+        }
     }
 
     void FixedUpdate()
@@ -55,27 +73,31 @@ public class GrappleHook : MonoBehaviour
             }
             closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
 
-            Vector2 angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);//Vector2.Distance(closestPoint.gameObject.transform.position, gameObject.transform.position);
+            angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
             angle.Normalize();
-            //If click then activate grapple
-            if (Input.GetKey(KeyCode.Mouse0))
+            //If clicking then activate grapple
+            if (grapple)
             {
-                //Debug.Log("Here");
                 rb.AddForce(angle * 100);
             }
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+            //If the mouse was released early we're going to give the player a boost of force 
+            if (wasGrapple)
             {
-                Debug.Log("Here");
-                rb.AddForce(angle * 1000);
+                rb.AddForce(angle * 500);
+                wasGrapple = false;
             }
         }
         else
         {
             if (lastClosest != null)
             {
+                //rb.AddForce(angle * 500);
                 lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
                 lastClosest = null;
             }
+            
+            wasGrapple = false;
+            grapple = false;
         }
     }
 }
