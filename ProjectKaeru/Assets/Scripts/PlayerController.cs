@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
 	public float walljumpVertical = 50f; // How much vertical force is applied to the player when they walljump
 	public float walljumpHorizontal = 50f; // How much horizontal force is applied to the player when they walljump
 
+	public bool busy = false;
+
 
 	[SerializeField] private LayerMask m_WhatIsWall; // What is considered a wall the player can jump off of
 
@@ -181,7 +183,7 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		//Applies most of the physics to the player
-		if (!isWalljumping)
+		if (!isWalljumping && !busy)
 		{
 			Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
 		}

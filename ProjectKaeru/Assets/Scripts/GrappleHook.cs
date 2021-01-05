@@ -20,6 +20,7 @@ public class GrappleHook : MonoBehaviour
 
     private bool grapple = false;
     private bool wasGrapple = false;
+    private bool grappling = false;
 
     private Vector2 angle;
 
@@ -27,15 +28,15 @@ public class GrappleHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling)
         {
             grapple = true;
         }
-        if (Input.GetKeyUp(KeyCode.Mouse0) && grapple)
+        /*if (Input.GetKeyUp(KeyCode.Mouse0) && grapple)
         {
-            grapple = false;
-            wasGrapple = true;
-        }
+            //grapple = false;
+            //wasGrapple = true;
+        }*/
     }
 
     void FixedUpdate()
@@ -67,28 +68,32 @@ public class GrappleHook : MonoBehaviour
             }
             closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
 
-            angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
-            float dis = angle.magnitude;
-            angle.Normalize();
-            //If clicking then activate grapple
+            float dis = 0f;
+
             if (grapple)
             {
+                angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
+                dis = angle.magnitude;
+                angle.Normalize();
+                controller.busy = true;
                 rb.gravityScale = 0f;
-                //rb.AddForce(angle * 100);
-                if (dis < 5)
-                {
-                    rb.velocity = angle * 10;
-                }
-                else
-                    rb.velocity = angle * dis * 5;
-            }
-            //If the mouse was released early we're going to give the player a boost of force 
-            if (wasGrapple)
-            {
-                rb.gravityScale = controller.gravityStore;
-                rb.AddForce(angle * 1000);
+                grapple = false;
+                grappling = true;
                 wasGrapple = false;
             }
+            //If clicking then activate grapple
+            if (grappling)
+            {
+                 rb.velocity = angle * 20;   
+            }
+            //If the mouse was released early we're going to give the player a boost of force 
+            /*if (wasGrapple)
+            {
+                controller.busy = false;
+                rb.gravityScale = controller.gravityStore;
+                //rb.AddForce(angle * 500);
+                wasGrapple = false;
+            }*/
         }
         else
         {
@@ -101,6 +106,19 @@ public class GrappleHook : MonoBehaviour
             
             wasGrapple = false;
             grapple = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
+        {
+            controller.busy = false;
+            rb.gravityScale = controller.gravityStore;
+            //rb.AddForce(angle * 500);
+            rb.velocity = angle * 25;
+            wasGrapple = true;
+            grappling = false;
         }
     }
 }
