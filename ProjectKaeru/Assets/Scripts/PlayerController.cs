@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
 	public Transform wallGrabPoint; // The point at which the player checks if they are against a wall they can grab
 	private bool canGrab, isGrabbing; // Whether or not the player can grab the wall infront of them and whether or not they're grabbing it
-	private float gravityStore; // Since we freeze gravity on the player when they're grabbing a wall, this stores the value we want to return gravity to
+	public float gravityStore; // Since we freeze gravity on the player when they're grabbing a wall, this stores the value we want to return gravity to
 	public float wallJumpTime = .1f; //How long the player loses control after walljumping, increasing this number causes the player to have a longer walljump that they can't cancel out of
 	private float wallJumpCounter; // Used to disable player movement between walljumps
 
@@ -218,6 +218,10 @@ public class PlayerController : MonoBehaviour
 				if (!wasGrounded)
 					OnLandEvent.Invoke();
 			}
+		}
+		if (colliders.Length == 0)
+		{
+			m_Grounded = false;
 		}
 	}
 

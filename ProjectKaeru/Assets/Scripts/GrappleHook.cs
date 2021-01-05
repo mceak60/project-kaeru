@@ -22,17 +22,12 @@ public class GrappleHook : MonoBehaviour
     private bool wasGrapple = false;
 
     private Vector2 angle;
-    //public SpringJoint2D grapple;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             grapple = true;
         }
@@ -58,7 +53,6 @@ public class GrappleHook : MonoBehaviour
                 {
                     minDistance = distance;
                     closestPoint = colliders[i];
-                    //Debug.Log(closestPoint.gameObject.name);
                 }
             }
 
@@ -74,16 +68,25 @@ public class GrappleHook : MonoBehaviour
             closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
 
             angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
+            float dis = angle.magnitude;
             angle.Normalize();
             //If clicking then activate grapple
             if (grapple)
             {
-                rb.AddForce(angle * 100);
+                rb.gravityScale = 0f;
+                //rb.AddForce(angle * 100);
+                if (dis < 5)
+                {
+                    rb.velocity = angle * 10;
+                }
+                else
+                    rb.velocity = angle * dis * 5;
             }
             //If the mouse was released early we're going to give the player a boost of force 
             if (wasGrapple)
             {
-                rb.AddForce(angle * 500);
+                rb.gravityScale = controller.gravityStore;
+                rb.AddForce(angle * 1000);
                 wasGrapple = false;
             }
         }
