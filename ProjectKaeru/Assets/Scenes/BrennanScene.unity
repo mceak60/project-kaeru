@@ -6415,7 +6415,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 117505938}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: efaf0eeebf1daf94cacb04899c59934c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -7193,7 +7193,39 @@ MonoBehaviour:
     _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
     _AreaColors:
     - {r: 0, g: 0, b: 0, a: 0}
-  tagNames: []
+  tagNames:
+  - Basic Ground
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
@@ -7232,10 +7264,10 @@ GameObject:
   - component: {fileID: 1598726562}
   - component: {fileID: 1598726561}
   - component: {fileID: 1598726560}
-  - component: {fileID: 1598726559}
   - component: {fileID: 1598726558}
   - component: {fileID: 1598726557}
   - component: {fileID: 1598726556}
+  - component: {fileID: 1598726559}
   m_Layer: 9
   m_Name: Skeleton (1)
   m_TagString: Untagged
@@ -7256,11 +7288,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 895446792800387136, guid: c00b61b2db3154a429bb090fe105b9c7, type: 3}
-  enemyDetectionRange: 6.5
+  enemyDetectionRange: 10
   groundDetection: {fileID: 2128433484}
   distanceToGround: 2
-  speed: 250
-  nextWaypointDistance: 3
+  speed: 400
+  nextWaypointDistance: 1
 --- !u!114 &1598726557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7303,8 +7335,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1598726561}
   maxHealth: 100
---- !u!61 &1598726559
-BoxCollider2D:
+--- !u!68 &1598726559
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7312,23 +7344,22 @@ BoxCollider2D:
   m_GameObject: {fileID: 1598726555}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: efaf0eeebf1daf94cacb04899c59934c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09119123, y: 0.02278328}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.7}
-    newSize: {x: 1.65, y: 1.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.303358, y: 1.7243128}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.5
+  m_Points:
+  - {x: -0.2937708, y: 0.35782635}
+  - {x: -0.13436699, y: 0.35782647}
+  - {x: -0.043268204, y: -0.34413242}
+  - {x: 0.22174072, y: -0.33960605}
+  - {x: 0.31166172, y: 0.34888017}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!50 &1598726560
 Rigidbody2D:
   serializedVersion: 4
@@ -7342,10 +7373,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 2
-  m_LinearDrag: 0
+  m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: efaf0eeebf1daf94cacb04899c59934c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -7428,7 +7459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598726555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.5, y: -2.15, z: 0}
+  m_LocalPosition: {x: -11.5, y: -2.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2128433484}
@@ -8337,7 +8368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128433484}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}

@@ -11,11 +11,12 @@ public class enemyAI : MonoBehaviour
     public float enemyDetectionRange = 6.5f; //Distance before this enemy starts pathfinding to the player
 
     public Transform groundDetection; //Helps with ground detection (don't walk off the side of a cliff)
-    private bool movingRight = true; //Determines if we are moving right
-    public float distanceToGround = 2; //Distance of our ray to the ground. Default 2
+    public float distanceToGround = 2f; //Distance of our ray to the ground. Default 2
+    private bool canIMove = true; //Variable helps determine if the enemy can move. Useful for not walking off a cliff
+    private bool facingLeft = true; //Am I facing left?
 
-    public float speed = 250f;
-    public float nextWaypointDistance = 3f;
+    public float speed = 400f;
+    public float nextWaypointDistance = 1f;
 
     Path path;
     int currentWaypoint = 0;
@@ -39,7 +40,7 @@ public class enemyAI : MonoBehaviour
     {
         if(seeker.IsDone())
         {
-            if(target == null)
+            if(target == null) //If the player dies, we need to find them again to begin pathfinding
             {
                 target = GameObject.Find("PlayerNew(Clone)").transform;
             }
@@ -62,8 +63,12 @@ public class enemyAI : MonoBehaviour
     }
 
     void FixedUpdate()
+        //Current Problems:
+        //Enemy needs a patrol or idle pattern to follow.
     {
-        if(Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyDetectionRange) //If in range, move in
+        //Debug.Log(groundDetection.position);
+        //Debug.Log(reachedEndOfPath);
+        if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyDetectionRange) //If in range, move towards the player
         {
             if (path == null)
                 return;
@@ -79,26 +84,26 @@ public class enemyAI : MonoBehaviour
             }
 
             Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized; //direction to move in
-            Vector2 force = direction * speed * Time.deltaTime; //force in our direction
-
-            rb.AddForce(force); //adding force to the rigid body
-            
-            //Debug.Log(groundInfo.collider);
-            if (rb.velocity.x > 1.5) //velocity is capped at 1.5 and -1.5 respectively
+            if (canIMove) //If I can move, move towards the current waypoint
             {
-                rb.velocity = new Vector2(1.5f, rb.velocity.y);
-            }
-            else if (rb.velocity.x < -1.5)
+                
+                Vector2 force = direction * speed * Time.deltaTime; //force in our direction
+                rb.AddForce(force); //adding force to the rigid body
+                facing(force);
+            } 
+            else //In order to not be stuck on a ledge, we need to turn around when our target is behind us
             {
-                rb.velocity = new Vector2(-1.5f, rb.velocity.y);
-            }
-
-            RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distanceToGround);//Ground detection variable
-
-            if (groundInfo.collider == false)//this could prevent enemies from being knocked off if they are moving in the direction of the cliff
-            {
-                Debug.Log("velocity = " + rb.velocity.x);
-                rb.velocity = new Vector2(0f, rb.velocity.y);
+                Vector2 relativePosition = transform.InverseTransformPoint(target.transform.position); //target postion compared to ours 
+                Debug.Log(relativePosition.x);
+                if (!facingLeft && relativePosition.x > 0)//When the skeleton faces us, our relative position is always negative.
+                {
+                    transform.localScale = new Vector3(1f, 1f, 1f); //face left
+                }
+                else if (facingLeft && relativePosition.x > 0)
+                {
+                    transform.localScale = new Vector3(-1f, 1f, 1f); //face right
+                }
+                    
             }
 
             float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -108,14 +113,23 @@ public class enemyAI : MonoBehaviour
                 currentWaypoint++;
             }
 
-            if (force.x >= 0.01f) //flip to face the direction we are moving in
+            LayerMask mask = LayerMask.GetMask("FloorsNWalls");
+            if (!Physics2D.Raycast(groundDetection.position, Vector2.down, distanceToGround, mask)) //if we dont see ground ahead. Stop moving
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            }
-            else if (force.x <= -0.01f)
+                if(canIMove) //only do the next line when we first turn off canIMove
+                    rb.velocity = new Vector2(0, rb.velocity.y); //Set velocity to zero to stop all horizontal momentum
+                canIMove = false;
+                
+            } else
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                canIMove = true;
             }
+
+        }
+        else
+        {
+            //idle or patrol movement for when the player isn't in range
+
         }
         //EDIT THIS TO WORK WITH WHAT I'VE ALREADY WRITTEN
         /*
@@ -134,5 +148,21 @@ public class enemyAI : MonoBehaviour
             }
         }
         */
+    }
+
+    void facing(Vector2 force) //which way should we face
+    {
+        //The enemy flips between directions due to the force being inconsistent sometimes.
+        //To combat this, measure the enemy's velocity to help determine where the enemy should face
+        if (force.x >= 0.01f && rb.velocity.x >= 0.005)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f); //face right
+            facingLeft = false;
+        }
+        else if (force.x <= -0.01f && rb.velocity.x <= -0.005)
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f); //face left
+            facingLeft = true;
+        }
     }
 }
