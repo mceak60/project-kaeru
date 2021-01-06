@@ -271,7 +271,7 @@ MonoBehaviour:
   startDashTime: 0.1
   dashRate: 3
   walljumpVertical: 14
-  walljumpHorizontal: 100
+  walljumpHorizontal: 20
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 4151
