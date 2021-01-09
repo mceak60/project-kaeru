@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 895446792800387143}
   - component: {fileID: 895446792800387144}
   - component: {fileID: 8273311361126527353}
+  - component: {fileID: 6704470884539212129}
   m_Layer: 8
   m_Name: PlayerNew
   m_TagString: Untagged
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 4151
+  itemManager: {fileID: 6704470884539212129}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -293,6 +295,19 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6704470884539212129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895446792800387166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f791a7729210e43846faa2d930c2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasDashPowerup: 0
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
