@@ -19,6 +19,8 @@ public class PlayerDeath : MonoBehaviour
     /*
      * Whenever the player enters a trigger with the "Death" tag the player is deleted and a new prefab is created at the respawn point
      * Max makes a good point that it may be better to just teleport the player to the respawn point instead and I agree since deleting it and making a new prefab would reset the player's health completely -Bren
+     * 
+     * I did the teleport to respawn change, you're welcome -Nick
      */
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -27,8 +29,8 @@ public class PlayerDeath : MonoBehaviour
             if (col.gameObject.CompareTag("Death"))
             {
                 isDead = true;
-                Destroy(gameObject);
                 LevelManager.instance.Respawn();
+                isDead = false;
             }
         }
     }

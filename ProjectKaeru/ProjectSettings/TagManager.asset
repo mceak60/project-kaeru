@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Death
   - Background
+  - DashPowerup
+  - WallClingPowerup
   layers:
   - Default
   - TransparentFX
