@@ -73,19 +73,19 @@ public class GrappleHook : MonoBehaviour
             //If clicking then activate grapple
             if (grapple)
             {
-                rb.gravityScale = 0f;
-                //rb.AddForce(angle * 100);
-                if (dis < 5)
+                //rb.gravityScale = 0f;
+                rb.AddForce(angle * 100);
+                /*if (dis < 5)
                 {
                     rb.velocity = angle * 10;
                 }
                 else
-                    rb.velocity = angle * dis * 5;
+                    rb.velocity = angle * dis * 5;*/
             }
             //If the mouse was released early we're going to give the player a boost of force 
             if (wasGrapple)
             {
-                rb.gravityScale = controller.gravityStore;
+                //rb.gravityScale = controller.gravityStore;
                 rb.AddForce(angle * 1000);
                 wasGrapple = false;
             }
@@ -94,7 +94,7 @@ public class GrappleHook : MonoBehaviour
         {
             if (lastClosest != null)
             {
-                //rb.AddForce(angle * 500);
+                rb.AddForce(angle * 500);
                 lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
                 lastClosest = null;
             }
