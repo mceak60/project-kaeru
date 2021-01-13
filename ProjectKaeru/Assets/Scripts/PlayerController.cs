@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
 		 */
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (Input.GetButtonDown("Jump") && !attacking)
+		if (Input.GetButtonDown("Jump") && !attacking && m_Grounded)
 		{
 			jump = true;
 			animator.SetBool("IsJumping", true);

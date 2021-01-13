@@ -6,7 +6,7 @@ using System;
 
 /* TODO:
  * If the player crosses over the hitbox of the target we want to preserve the last angle from right before they cross over the target and use that as an angle to launch the player real high
- * It also kinda doesn't work with horizontal velocity for some reason
+ * It also kinda doesn't work with horizontal velocity because the player movement overwrites it
  */
 public class GrappleHook : MonoBehaviour
 {
@@ -24,13 +24,28 @@ public class GrappleHook : MonoBehaviour
 
     private Vector2 angle;
 
+    public float flingTime;
+    private float myFlingTime;
+
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling && !wasGrapple)
         {
             grapple = true;
+        }
+
+        if (controller.busy && myFlingTime > 0)
+        {
+            myFlingTime -= Time.deltaTime;
+        }
+        else 
+        {
+            controller.busy = false;
+            wasGrapple = false;
+            myFlingTime = 0;
+
         }
         /*if (Input.GetKeyUp(KeyCode.Mouse0) && grapple)
         {
@@ -79,13 +94,14 @@ public class GrappleHook : MonoBehaviour
                 rb.gravityScale = 0f;
                 grapple = false;
                 grappling = true;
-                wasGrapple = false;
+                //wasGrapple = false;
             }
             //If clicking then activate grapple
             if (grappling)
             {
-                 rb.velocity = angle * 20;   
+                 rb.velocity = angle * 30;   
             }
+
             //If the mouse was released early we're going to give the player a boost of force 
             /*if (wasGrapple)
             {
@@ -99,7 +115,6 @@ public class GrappleHook : MonoBehaviour
         {
             if (lastClosest != null)
             {
-                //rb.AddForce(angle * 500);
                 lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
                 lastClosest = null;
             }
@@ -113,12 +128,23 @@ public class GrappleHook : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
         {
-            controller.busy = false;
+            controller.busy = true;
+            myFlingTime = flingTime;
             rb.gravityScale = controller.gravityStore;
-            //rb.AddForce(angle * 500);
             rb.velocity = angle * 25;
             wasGrapple = true;
             grappling = false;
+        }
+    }
+
+
+    //You occasionaly lose the power to grapple with this code for some reason -Bren
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Grappleable") && !wasGrapple)
+        {
+            wasGrapple = false;
+            myFlingTime = flingTime;
         }
     }
 }
