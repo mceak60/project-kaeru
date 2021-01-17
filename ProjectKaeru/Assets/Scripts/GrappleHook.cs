@@ -152,6 +152,13 @@ public class GrappleHook : MonoBehaviour
             wasGrapple = true;
             grappling = false;
         }
+        else if (!col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
+        {
+            controller.busy = false;
+            rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
+            wasGrapple = false;
+            grappling = false;
+        }
     }
 
     // This prevents the player from firing their grapple again when inside a target which would have werid effects, might not be necassary if we disable grapple points after the player uses them
@@ -163,5 +170,13 @@ public class GrappleHook : MonoBehaviour
             wasGrapple = false;
             myFlingTime = flingTime;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        controller.busy = false;
+        rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
+        wasGrapple = false;
+        grappling = false;
     }
 }
