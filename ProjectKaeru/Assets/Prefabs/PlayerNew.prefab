@@ -259,7 +259,7 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 8247
   m_GroundCheck: {fileID: 895446793271014313}
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
@@ -279,7 +279,7 @@ MonoBehaviour:
   busy: 0
   m_WhatIsWall:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 8247
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -313,6 +313,9 @@ MonoBehaviour:
   grappleable:
     serializedVersion: 2
     m_Bits: 4096
+  grappleableInterupt:
+    serializedVersion: 2
+    m_Bits: 1
   grapplePointUL: {fileID: 4594697175735091220}
   grapplePointBR: {fileID: 2333692492317940585}
   rb: {fileID: 895446792800387139}

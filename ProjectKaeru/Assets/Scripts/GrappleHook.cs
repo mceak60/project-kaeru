@@ -8,10 +8,13 @@ using System;
  * Find more permanent control scheme for grappling hook and attacking
  * Create the swing?
  * Disable all player movement when grappling (They can currently dash and attack)
+ * We can grapple through walls
+ * When the player dies we need to reset the grapple
  */
 public class GrappleHook : MonoBehaviour
 {
     [SerializeField] private LayerMask grappleable;
+    [SerializeField] private LayerMask grappleableInterupt;
     public Transform grapplePointUL; // Upper left corner of grapple hitbox
     public Transform grapplePointBR; // Bottom right corner of grapple hitbox
     public Rigidbody2D rb; // Ridgidbody of the player
@@ -58,7 +61,23 @@ public class GrappleHook : MonoBehaviour
     void FixedUpdate()
     {
         //Find all grapple points in the hitbox rectangle
-        Collider2D[] colliders = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
+        Collider2D[] coll = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
+        List<Collider2D> colli = new List<Collider2D>();
+
+        // See if the line of sight to them is obstructed by an object
+        for (int i = 0; i < coll.Length; i++)
+        {
+            Vector2 raycastAngle = new Vector2(coll[i].gameObject.transform.position.x - gameObject.transform.position.x, coll[i].gameObject.transform.position.y - gameObject.transform.position.y);
+            RaycastHit2D hitWall = Physics2D.Raycast(transform.position, raycastAngle, 20, grappleableInterupt);
+            RaycastHit2D hitPoint = Physics2D.Raycast(transform.position, raycastAngle, Mathf.Infinity, grappleable);
+            //If we don't hit a wall or we hit the target before we hit the wall then we can grapple to the target
+            if (hitWall.collider == null || hitPoint.distance <= hitWall.distance)
+            {
+                colli.Add(coll[i]);
+            }
+        }
+
+        Collider2D[] colliders = colli.ToArray();
 
         //Iterate over them and find the closest target
         if (colliders.Length > 0)
@@ -117,6 +136,7 @@ public class GrappleHook : MonoBehaviour
                 lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
                 lastClosest = null;
             }
+            grapple = false;
         }
     }
 
