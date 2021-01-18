@@ -9,19 +9,27 @@ public class enemyAI : MonoBehaviour
     public Transform target; //where we are pathfinding to
 
     public float enemyDetectionRange = 6.5f; //Distance before this enemy starts pathfinding to the player
+    public float enemyAttackRange = 1f; //Distance between the player and the enemy where the enemy executes an attack
 
     public Transform groundDetection; //Helps with ground detection (don't walk off the side of a cliff)
     public float distanceToGround = 2f; //Distance of our ray to the ground. Default 2
     private bool canIMove = true; //Variable helps determine if the enemy can move. Useful for not walking off a cliff
     private bool facingLeft = true; //Am I facing left?
 
-    public float attackSpeed = 400f;
-    public float patrolSpeed = 200f;
+    public float attackSpeed = 400f; //speed at which the enemy moves when engaing the player
+    public float patrolSpeed = 200f; //speed at which the enemy moves when idling
     public float nextWaypointDistance = 1f;
+
+    //enemy's attack
+    private float attackCooldownTracker; //Tracks the cooldown of when we can attack again
+    public float attackCooldown; //The set cooldown of when this enemy can attack again
+    public Transform attackPos; //child of the enemy which is the base of their hitbox
+    public float hitboxRadius; //radius of the hitbox
+
+    public int damage; //How much damage an attack by this enemy does
 
     Path path;
     int currentWaypoint = 0;
-    bool reachedEndOfPath = false;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -34,7 +42,7 @@ public class enemyAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
-        InvokeRepeating("UpdatePath", 0f, 0.5f);
+        InvokeRepeating("UpdatePath", 0f, 0.25f);
     }
 
     void UpdatePath()
@@ -66,21 +74,43 @@ public class enemyAI : MonoBehaviour
     void FixedUpdate()
         //Current Problems:
         //Enemy needs a walkin animation
+        //We constantly pathfind, but it should be possible to limit it to only pathfind when the player is in range
+        //There's a random debug statement somewhere in like the source code that I need to remove
+        //Consider using Time.fixedDeltaTime instead of time.deltaTime
+        //Change how enemyAttackRange works
+        //maybe put the hixbox collider check outside of the if statements. Like check if the player is within that hitbox
     {
-        if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyDetectionRange) //If in range, move towards the player
+        Collider2D player = 
+        if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyAttackRange) //If in attack range, try to attack the player
         {
+            //Maybe set canIMove to false during this time
+            if (attackCooldownTracker <= 0)
+            {
+                //we can attack
+
+                //throw up a collider to try to attack the player
+                Collider2D player = Physics2D.OverlapCircle(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
+                //Tells the player they've been hit
+                //Only works if the player is actually hit by the attack
+                player.GetComponent<PlayerCombat>().hitByEnemy(damage);
+                
+                //Collider2D[] playerArray = Physics2D.OverlapCircleAll(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
+                //for (int i = 0; i < playerArray.Length; i++)
+                //{
+                //    playerArray[i].GetComponent<PlayerCombat>().hitByEnemy(damage);
+                //}
+                attackCooldownTracker = attackCooldown;
+            } else
+            {
+                attackCooldownTracker -= Time.deltaTime;
+            }
+
+        }
+        else if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyDetectionRange) //If in detect range, move towards the player
+        {
+            //UpdatePath();
             if (path == null)
                 return;
-
-            if (currentWaypoint >= path.vectorPath.Count)
-            {
-                reachedEndOfPath = true;
-                return;
-            }
-            else
-            {
-                reachedEndOfPath = false;
-            }
             
             if (canIMove) //If I can move, move towards the current waypoint
             {
@@ -113,9 +143,8 @@ public class enemyAI : MonoBehaviour
             edgeDetection();
 
         }
-        else
+        else //idle or patrol movement for when the player isn't in range
         {
-            //idle or patrol movement for when the player isn't in range
             Vector2 force;
             if (facingLeft)
                 force = new Vector2(-1,0) * patrolSpeed * Time.deltaTime; //force to the left
@@ -164,5 +193,11 @@ public class enemyAI : MonoBehaviour
         {
             canIMove = true;
         }
+    }
+
+    private void OnDrawGizmosSelected() //draws the hitbox for our attack
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position, hitboxRadius);
     }
 }

@@ -14,6 +14,8 @@ public class PlayerCombat : MonoBehaviour
     float nextAttackTime = 0f;
     public bool isAttacking = false;
 
+    public int health = 100; //health of the player. This is here so I can see if the enemyAI script attack function works.
+
     // Update is called once per frame
     /*
      * If the player's attack is not on cooldown then see if the player has pressed the attack button and switch to the attacking animation
@@ -54,5 +56,11 @@ public class PlayerCombat : MonoBehaviour
         if (attackPoint == null)
             return;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    public void hitByEnemy(int damage) //Hi, Max here. This is a method that lowers the players health based on the damage an enemy's attack does to them
+    {
+        health -= damage;
+        Debug.Log("Player has taken damage. Current Health = " + health);
     }
 }
