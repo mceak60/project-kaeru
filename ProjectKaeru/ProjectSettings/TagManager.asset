@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Death
   - Background
+  - Grappleable
   - DashPowerup
   - WallClingPowerup
   layers:
@@ -21,6 +22,7 @@ TagManager:
   - Enemy
   - Death
   - Background
+  - Grappleable
   - FloorsNWalls
   - 
   - 
