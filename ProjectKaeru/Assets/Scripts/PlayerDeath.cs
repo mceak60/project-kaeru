@@ -6,18 +6,15 @@ public class PlayerDeath : MonoBehaviour
 {
     private bool isDead = false;
 
-    private void OnCollisionEnter2D(Collision2D col)
+    //Nick commented out this code because he thought it might have caused the shadow clone glitch but I don't think thats the case and we may need to update it and use it sometime -Bren
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isDead)
+        if (collision.gameObject.CompareTag("Death"))
         {
-            if (col.gameObject.CompareTag("Death"))
-            {
-                isDead = true;
-                Destroy(gameObject);
-                LevelManager.instance.Respawn();
-            }
+            Destroy(gameObject);
+            LevelManager.instance.Respawn();
         }
-    }
+    }*/
 
     /*
      * Whenever the player enters a trigger with the "Death" tag the player is deleted and a new prefab is created at the respawn point
