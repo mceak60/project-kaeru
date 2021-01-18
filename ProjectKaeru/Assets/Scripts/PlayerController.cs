@@ -56,8 +56,6 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] private LayerMask m_WhatIsWall; // What is considered a wall the player can jump off of
 
-	public ItemManager itemManager; // Reference to ItemManager script so we can access the 'has___Powerup' properties
-
 	[Header("Events")]
 	[Space]
 
@@ -121,10 +119,11 @@ public class PlayerController : MonoBehaviour
 			else
 			{
 				attacking = false;
+			}
 
-
-		if (itemManager.hasDashPowerup)
-        {
+			/*
+			 * This code allows the player to dash if its not on cooldown
+			 */
 			if (Time.time >= nextDashTime)
 			{
 				if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
@@ -135,11 +134,9 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-		/*
-		 * This code handles the walljump
-		 */
-		if(itemManager.hasWallClingPowerup)
-        {
+			/*
+			 * This code handles the walljump
+			 */
 			canGrab = Physics2D.OverlapCircle(wallGrabPoint.position, .2f, m_WhatIsWall);
 			isGrabbing = false;
 			//If we're against a wall we can grab and not on the floor...
@@ -163,7 +160,6 @@ public class PlayerController : MonoBehaviour
 					wallJump = true;
 					animator.SetBool("IsJumping", true);
 					//Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
-
 				}
 
 			}
@@ -171,9 +167,6 @@ public class PlayerController : MonoBehaviour
 			{
 				animator.SetBool("IsGrabbing", false);
 			}
-
-		}
-
 
 			/*
 			 * This is where most of the values are passed to the animator if that applies
