@@ -123,70 +123,69 @@ public class PlayerController : MonoBehaviour
 				attacking = false;
 
 
-				if (itemManager.hasDashPowerup)
+		if (itemManager.hasDashPowerup)
+        {
+			if (Time.time >= nextDashTime)
+			{
+				if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
 				{
-					if (Time.time >= nextDashTime)
-					{
-						if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
-						{
-							dashing = true;
-							nextDashTime = (Time.time + 1f / dashRate) + dashTime;
-							animator.SetBool("IsJumping", false);
-						}
-					}
-
-					/*
-					 * This code handles the walljump
-					 */
-					if (itemManager.hasWallClingPowerup)
-					{
-						canGrab = Physics2D.OverlapCircle(wallGrabPoint.position, .2f, m_WhatIsWall);
-						isGrabbing = false;
-						//If we're against a wall we can grab and not on the floor...
-						if (canGrab && !m_Grounded)
-						{
-							//...and we're holding a direction then grab the wall
-							if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
-							{
-								isGrabbing = true;
-							}
-						}
-						if (isGrabbing == true)
-						{
-							//If we're grabbing the wall and we press jump then we preform a walljump
-							//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
-							if (Input.GetButtonDown("Jump"))
-							{
-								//isWalljumping = true;
-								isGrabbing = false;
-								//jump = true;
-								wallJump = true;
-								animator.SetBool("IsJumping", true);
-								//Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
-
-							}
-
-						}
-						else
-						{
-							animator.SetBool("IsGrabbing", false);
-						}
-
-					}
-
-
-					/*
-					 * This is where most of the values are passed to the animator if that applies
-					 */
-					animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-					animator.SetBool("IsCrouching", crouch);
-					animator.SetBool("IsGrounded", m_Grounded);
-					animator.SetBool("IsDashing", dashing);
-					animator.SetBool("IsGrabbing", isGrabbing);
+					dashing = true;
+					nextDashTime = (Time.time + 1f / dashRate) + dashTime;
+					animator.SetBool("IsJumping", false);
 				}
 			}
+
+		/*
+		 * This code handles the walljump
+		 */
+		if(itemManager.hasWallClingPowerup)
+        {
+			canGrab = Physics2D.OverlapCircle(wallGrabPoint.position, .2f, m_WhatIsWall);
+			isGrabbing = false;
+			//If we're against a wall we can grab and not on the floor...
+			if (canGrab && !m_Grounded)
+			{
+				//...and we're holding a direction then grab the wall
+				if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+				{
+					isGrabbing = true;
+				}
+			}
+			if (isGrabbing == true)
+			{
+				//If we're grabbing the wall and we press jump then we preform a walljump
+				//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
+				if (Input.GetButtonDown("Jump"))
+				{
+					//isWalljumping = true;
+					isGrabbing = false;
+					//jump = true;
+					wallJump = true;
+					animator.SetBool("IsJumping", true);
+					//Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
+
+				}
+
+			}
+			else
+			{
+				animator.SetBool("IsGrabbing", false);
+			}
+
+		}
+
+
+			/*
+			 * This is where most of the values are passed to the animator if that applies
+			 */
+			animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+			animator.SetBool("IsCrouching", crouch);
+			animator.SetBool("IsGrounded", m_Grounded);
+			animator.SetBool("IsDashing", dashing);
+			animator.SetBool("IsGrabbing", isGrabbing);
 		}
 	}
+
 	//I'm pretty sure this is a relic of when the two scripts were seperate and I can move this code into where I update m_IsGrounded but it works and I'm too lazy deal with the possibility that it doesn't work -Bren
 	public void OnLanding()
 	{
