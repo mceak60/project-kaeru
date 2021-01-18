@@ -70,6 +70,7 @@ Transform:
   - {fileID: 895446793271014313}
   - {fileID: 895446792712663767}
   - {fileID: 6140246176250638282}
+  - {fileID: 7284200413583818639}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -262,17 +263,19 @@ MonoBehaviour:
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
   m_AttackSpeed: 0.01
-  dashSpeed: 20
+  dashSpeed: 15
   fallMultiplier: 3
   lowJumpMultiplier: 5
   wallGrabPoint: {fileID: 6140246176250638282}
-  wallJumpTime: 0.1
+  wallJumpTime: 0.2
   animator: {fileID: 895446792800387142}
   runSpeed: 32
-  startDashTime: 0.1
+  startDashTime: 0.15
   dashRate: 3
   walljumpVertical: 14
   walljumpHorizontal: 20
+  firePoint: {fileID: 7284200413583818639}
+  dartPrefab: {fileID: 2223009995948294910, guid: 24c6f5b9017091b4cbdb5db04b641479, type: 3}
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 4151
@@ -308,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasDashPowerup: 0
+  hasWallClingPowerup: 0
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,4 +401,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 895446792800387136}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7063293847941252439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7284200413583818639}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7284200413583818639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7063293847941252439}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.32, y: -0.08, z: 0.0013372898}
+  m_LocalScale: {x: 0.9999999, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 895446792800387136}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

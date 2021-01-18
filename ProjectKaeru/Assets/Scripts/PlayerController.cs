@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
 	public float walljumpVertical = 50f; // How much vertical force is applied to the player when they walljump
 	public float walljumpHorizontal = 50f; // How much horizontal force is applied to the player when they walljump
 
+	public Transform firePoint; // The point the player fires projectiles from
+	public GameObject dartPrefab;
+
 
 	[SerializeField] private LayerMask m_WhatIsWall; // What is considered a wall the player can jump off of
 
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
 
+		if (OnCrouchEvent == null)
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
 	}
@@ -117,6 +121,11 @@ public class PlayerController : MonoBehaviour
 		{
 			attacking = false;
 		}
+
+		if (Input.GetButtonDown("Fire2"))
+        {
+			Instantiate(dartPrefab, firePoint.position, firePoint.rotation);
+        }
 
 		/*
 		 * This code allows the player to dash if its not on cooldown
@@ -371,9 +380,7 @@ public class PlayerController : MonoBehaviour
 		// Switch the way the player is labelled as facing.
 		m_FacingRight = !m_FacingRight;
 
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+		// Rotate the transform
+		transform.Rotate(0f, 180f, 0f);
 	}
 }
