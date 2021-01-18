@@ -13,8 +13,8 @@ public class PlayerDeath : MonoBehaviour
             if (col.gameObject.CompareTag("Death"))
             {
                 isDead = true;
-                Destroy(gameObject);
                 LevelManager.instance.Respawn();
+                isDead = false;
             }
         }
     }
