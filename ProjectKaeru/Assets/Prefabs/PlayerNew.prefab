@@ -47,11 +47,8 @@ GameObject:
   - component: {fileID: 895446792800387143}
   - component: {fileID: 895446792800387144}
   - component: {fileID: 8273311361126527353}
-
   - component: {fileID: 2276758851224923948}
   - component: {fileID: 4479447833693287716}
-  - component: {fileID: 6704470884539212129}
-
   m_Layer: 8
   m_Name: PlayerNew
   m_TagString: Untagged
@@ -74,6 +71,9 @@ Transform:
   - {fileID: 895446793271014313}
   - {fileID: 895446792712663767}
   - {fileID: 6140246176250638282}
+  - {fileID: 4594697175735091220}
+  - {fileID: 2333692492317940585}
+  - {fileID: 5411581505422008434}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,7 +96,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5416c0318b8c348b7a06f020e9af92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 700
+  m_JumpForce: 650
   m_CrouchSpeed: 0
   m_MovementSmoothing: 0.01
   m_AirControl: 1
@@ -266,17 +266,20 @@ MonoBehaviour:
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
   m_AttackSpeed: 0.01
-  dashSpeed: 20
-  fallMultiplier: 3
-  lowJumpMultiplier: 5
+  dashSpeed: 18
+  fallMultiplier: 4
+  lowJumpMultiplier: 10
   wallGrabPoint: {fileID: 6140246176250638282}
+  gravityStore: 0
   wallJumpTime: 0.1
   animator: {fileID: 895446792800387142}
   runSpeed: 32
-  startDashTime: 0.1
+  startDashTime: 0.15
   dashRate: 3
   walljumpVertical: 14
-  walljumpHorizontal: 20
+  walljumpHorizontal: 15
+  busy: 0
+  wallJump: 0
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 55
@@ -299,7 +302,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &2276758851224923948
---- !u!114 &6704470884539212129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -424,10 +426,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
-  m_Script: {fileID: 11500000, guid: 87f791a7729210e43846faa2d930c2f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasDashPowerup: 0
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,4 +515,94 @@ Transform:
   m_Children: []
   m_Father: {fileID: 895446792800387136}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2093460603887534569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5411581505422008434}
+  m_Layer: 8
+  m_Name: GrapplePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5411581505422008434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093460603887534569}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.19, y: 0.724, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 895446792800387136}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3762522083913043818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4594697175735091220}
+  m_Layer: 8
+  m_Name: GrappleCornerUL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4594697175735091220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3762522083913043818}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.75000095, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 895446792800387136}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7653318125475664448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2333692492317940585}
+  m_Layer: 8
+  m_Name: GrappleCornerBR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2333692492317940585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7653318125475664448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: -0.86899996, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 895446792800387136}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

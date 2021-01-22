@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
 	public Transform wallGrabPoint; // The point at which the player checks if they are against a wall they can grab
 	private bool canGrab, isGrabbing; // Whether or not the player can grab the wall infront of them and whether or not they're grabbing it
-	private float gravityStore; // Since we freeze gravity on the player when they're grabbing a wall, this stores the value we want to return gravity to
+	public float gravityStore; // Since we freeze gravity on the player when they're grabbing a wall, this stores the value we want to return gravity to
 	public float wallJumpTime = .1f; //How long the player loses control after walljumping, increasing this number causes the player to have a longer walljump that they can't cancel out of
 	private float wallJumpCounter; // Used to disable player movement between walljumps
 
@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
 	public float walljumpVertical = 50f; // How much vertical force is applied to the player when they walljump
 	public float walljumpHorizontal = 50f; // How much horizontal force is applied to the player when they walljump
 
+	public bool busy = false;
+	public bool wallJump = false;
 
 	[SerializeField] private LayerMask m_WhatIsWall; // What is considered a wall the player can jump off of
 
@@ -91,36 +93,37 @@ public class PlayerController : MonoBehaviour
 		/*
 		 * Most of the code in this part is just checking for the player's input and setting the corresponding value accordingly if that action can be taken
 		 */
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (Input.GetButtonDown("Jump") && !attacking)
+		if (!busy)
 		{
-			jump = true;
-			animator.SetBool("IsJumping", true);
-		}
-		if (Input.GetButtonDown("Crouch"))
-		{
-			crouch = true;
-		}
-		else if (Input.GetButtonUp("Crouch"))
-		{
-			crouch = false;
-		}
+			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (GetComponent<PlayerCombat>().isAttacking && !isGrabbing)
-		{
-			attacking = true;
-		}
-		else
-		{
-			attacking = false;
-		}
+			if (Input.GetButtonDown("Jump") && !attacking && m_Grounded)
+			{
+				jump = true;
+				animator.SetBool("IsJumping", true);
+			}
+			if (Input.GetButtonDown("Crouch"))
+			{
+				crouch = true;
+			}
+			else if (Input.GetButtonUp("Crouch"))
+			{
+				crouch = false;
+			}
 
-		/*
-		 * This code allows the player to dash if its not on cooldown
-		 */
-		if (itemManager.hasDashPowerup)
-        {
+			if (GetComponent<PlayerCombat>().isAttacking && !isGrabbing)
+			{
+				attacking = true;
+			}
+			else
+			{
+				attacking = false;
+			}
+
+			/*
+			 * This code allows the player to dash if its not on cooldown
+			 */
 			if (Time.time >= nextDashTime)
 			{
 				if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
@@ -130,7 +133,6 @@ public class PlayerController : MonoBehaviour
 					animator.SetBool("IsJumping", false);
 				}
 			}
-		}
 
 			/*
 			 * This code handles the walljump
@@ -152,11 +154,12 @@ public class PlayerController : MonoBehaviour
 				//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
 				if (Input.GetButtonDown("Jump"))
 				{
-					isWalljumping = true;
+					//isWalljumping = true;
 					isGrabbing = false;
-					jump = true;
+					//jump = true;
+					wallJump = true;
 					animator.SetBool("IsJumping", true);
-					Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
+					//Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
 				}
 
 			}
@@ -184,14 +187,18 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (wallJump)
+		{
+			jump = true;
+		}
 		//Applies most of the physics to the player
-		if (!isWalljumping)
+		if (!isWalljumping && !busy)
 		{
 			Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
 		}
 
 		//We set jump to false right after move so we don't continue applying the upward force
-		jump = false;
+			jump = false;
 
 		//Updates the time keeping values for dashing if that applies
 		if (dashing)
@@ -223,40 +230,47 @@ public class PlayerController : MonoBehaviour
 					OnLandEvent.Invoke();
 			}
 		}
+		if (colliders.Length == 0)
+		{
+			m_Grounded = false;
+		}
 	}
 
 
 	public void Move(float move, bool crouch, bool jump, bool attack, bool dash, bool grab)
 	{
 		// this statements prevents the player from moving during the first part of the walljump, its how a lott of games do it
+
+		/*
+		* This applies all the physics of the walljump
+	    */
+		if (grab)
+		{
+
+			m_Rigidbody2D.gravityScale = 0f;
+			m_Rigidbody2D.velocity = Vector2.zero;
+
+			if (jump)
+			{
+				wallJumpCounter = wallJumpTime;
+				if (move < 0)
+					m_Rigidbody2D.velocity = new Vector2(walljumpHorizontal, walljumpVertical);
+				else
+					m_Rigidbody2D.velocity = new Vector2(-1 * walljumpHorizontal, walljumpVertical);
+				m_Rigidbody2D.gravityScale = gravityStore;
+
+				isWalljumping = false;
+				wallJump = false;
+				//Flip();
+			}
+		}
+		else
+		{
+			m_Rigidbody2D.gravityScale = gravityStore;
+		}
 		if (wallJumpCounter <= 0)
 		{
-			/*
-			 * This applies all the physics of the walljump
-			 */
-			if (grab)
-			{
-
-				m_Rigidbody2D.gravityScale = 0f;
-				m_Rigidbody2D.velocity = Vector2.zero;
-
-				if (jump)
-				{
-					wallJumpCounter = wallJumpTime;
-					if(move < 0)
-						m_Rigidbody2D.velocity = new Vector2(walljumpHorizontal, walljumpVertical);
-					else
-						m_Rigidbody2D.velocity = new Vector2(-1 * walljumpHorizontal, walljumpVertical);
-					m_Rigidbody2D.gravityScale = gravityStore;
-
-					isWalljumping = false;
-					//Flip();
-				}
-			}
-			else
-			{
-				m_Rigidbody2D.gravityScale = gravityStore;
-			}
+			
 
 			/*
 			 * This part applies the dash force
@@ -357,7 +371,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			wallJumpCounter -= Time.deltaTime;
+			wallJumpCounter -= Time.fixedDeltaTime;
 		}
 	}
 
