@@ -30,6 +30,7 @@ public class enemyAI : MonoBehaviour
 
     Path path;
     int currentWaypoint = 0;
+    bool reachedEndOfPath = false; //this variable is IMPORTANT shut the fuck up
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -79,7 +80,8 @@ public class enemyAI : MonoBehaviour
         //Consider using Time.fixedDeltaTime instead of time.deltaTime
         //Change how enemyAttackRange works
         //maybe put the hixbox collider check outside of the if statements. Like check if the player is within that hitbox
-        //Make the skeleton a prefab
+        //Create a wall detection gameobject so we can turn around when we bump into a wall
+
     {
         if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyAttackRange) //If in attack range, try to attack the player
         {
@@ -104,7 +106,7 @@ public class enemyAI : MonoBehaviour
                 attackCooldownTracker = attackCooldown;
             } else
             {
-                attackCooldownTracker -= Time.deltaTime;
+                attackCooldownTracker -= Time.fixedDeltaTime;
             }
 
         }
@@ -113,7 +115,17 @@ public class enemyAI : MonoBehaviour
             //UpdatePath();
             if (path == null)
                 return;
-            
+
+            if (currentWaypoint >= path.vectorPath.Count)
+            {
+                reachedEndOfPath = true;
+                return;
+            }
+            else
+            {
+                reachedEndOfPath = false;
+            }
+
             if (canIMove) //If I can move, move towards the current waypoint
             {
                 Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized; //direction to move in

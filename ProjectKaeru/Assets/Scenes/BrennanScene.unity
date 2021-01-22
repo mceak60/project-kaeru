@@ -6534,7 +6534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287351741}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.452467, y: -0.8830427, z: -10}
+  m_LocalPosition: {x: -29.45244, y: -0.88811815, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1364994705}
@@ -8123,9 +8123,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+      propertyPath: hitboxRadius
+      value: 0.745
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+      propertyPath: attackCooldown
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+      propertyPath: enemyAttackRange
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4034039780617909191, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: m_Name
       value: Skeleton (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034039780617909244, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+      propertyPath: m_Constraints
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4034039780617909247, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: m_RootOrder
