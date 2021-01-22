@@ -317,8 +317,6 @@ MonoBehaviour:
   grapplePointBR: {fileID: 2333692492317940585}
   rb: {fileID: 895446792800387139}
   controller: {fileID: 8273311361126527353}
-  grappleVelo: 30
-  flingVelo: 22
   flingTime: 0.15
 --- !u!1 &895446793271014312
 GameObject:
