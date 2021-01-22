@@ -8,13 +8,10 @@ using System;
  * Find more permanent control scheme for grappling hook and attacking
  * Create the swing?
  * Disable all player movement when grappling (They can currently dash and attack)
- * We can grapple through walls
- * When the player dies we need to reset the grapple
  */
 public class GrappleHook : MonoBehaviour
 {
     [SerializeField] private LayerMask grappleable;
-    [SerializeField] private LayerMask grappleableInterupt;
     public Transform grapplePointUL; // Upper left corner of grapple hitbox
     public Transform grapplePointBR; // Bottom right corner of grapple hitbox
     public Rigidbody2D rb; // Ridgidbody of the player
@@ -34,9 +31,7 @@ public class GrappleHook : MonoBehaviour
     public float flingTime; // The amount of time the player's control is stopped also how long horizontal force is added to the player
     private float myFlingTime; // Current time until the player can move again
 
-    public LineRenderer lr;
-
-
+    
     void Update()
     {
         //If the player clicks and isn't currenlty grappling then try to grapple
@@ -51,7 +46,7 @@ public class GrappleHook : MonoBehaviour
             myFlingTime -= Time.deltaTime;
         }
         // Re enable player control
-        else
+        else 
         {
             controller.busy = false;
             wasGrapple = false;
@@ -63,23 +58,7 @@ public class GrappleHook : MonoBehaviour
     void FixedUpdate()
     {
         //Find all grapple points in the hitbox rectangle
-        Collider2D[] coll = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
-        List<Collider2D> colli = new List<Collider2D>();
-
-        // See if the line of sight to them is obstructed by an object
-        for (int i = 0; i < coll.Length; i++)
-        {
-            Vector2 raycastAngle = new Vector2(coll[i].gameObject.transform.position.x - gameObject.transform.position.x, coll[i].gameObject.transform.position.y - gameObject.transform.position.y);
-            RaycastHit2D hitWall = Physics2D.Raycast(transform.position, raycastAngle, 20, grappleableInterupt);
-            RaycastHit2D hitPoint = Physics2D.Raycast(transform.position, raycastAngle, Mathf.Infinity, grappleable);
-            //If we don't hit a wall or we hit the target before we hit the wall then we can grapple to the target
-            if (hitWall.collider == null || hitPoint.distance <= hitWall.distance)
-            {
-                colli.Add(coll[i]);
-            }
-        }
-
-        Collider2D[] colliders = colli.ToArray();
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
 
         //Iterate over them and find the closest target
         if (colliders.Length > 0)
@@ -126,7 +105,7 @@ public class GrappleHook : MonoBehaviour
             //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
             if (grappling)
             {
-                rb.velocity = angle * grappleVelo;
+                 rb.velocity = angle * grappleVelo;   
             }
 
         }
@@ -138,7 +117,6 @@ public class GrappleHook : MonoBehaviour
                 lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
                 lastClosest = null;
             }
-            grapple = false;
         }
     }
 
@@ -154,13 +132,6 @@ public class GrappleHook : MonoBehaviour
             wasGrapple = true;
             grappling = false;
         }
-        else if (!col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
-        {
-            controller.busy = false;
-            rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
-            wasGrapple = false;
-            grappling = false;
-        }
     }
 
     // This prevents the player from firing their grapple again when inside a target which would have werid effects, might not be necassary if we disable grapple points after the player uses them
@@ -172,13 +143,5 @@ public class GrappleHook : MonoBehaviour
             wasGrapple = false;
             myFlingTime = flingTime;
         }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        controller.busy = false;
-        rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
-        wasGrapple = false;
-        grappling = false;
     }
 }
