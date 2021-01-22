@@ -8,6 +8,8 @@ using System;
  * Find more permanent control scheme for grappling hook and attacking
  * Create the swing?
  * Disable all player movement when grappling (They can currently dash and attack)
+ * We can grapple through walls
+ * When the player dies we need to reset the grapple
  */
 public class GrappleHook : MonoBehaviour
 {
@@ -178,7 +180,6 @@ public class GrappleHook : MonoBehaviour
         {
             wasGrapple = false;
             myFlingTime = flingTime;
-            lr.positionCount = 0;
         }
     }
 
@@ -188,6 +189,5 @@ public class GrappleHook : MonoBehaviour
         rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
         wasGrapple = false;
         grappling = false;
-        lr.positionCount = 0;
     }
 }
