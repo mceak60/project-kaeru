@@ -266,7 +266,7 @@ MonoBehaviour:
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
   m_AttackSpeed: 0.01
-  dashSpeed: 18
+  dashSpeed: 20
   fallMultiplier: 4
   lowJumpMultiplier: 10
   wallGrabPoint: {fileID: 6140246176250638282}
@@ -274,12 +274,11 @@ MonoBehaviour:
   wallJumpTime: 0.1
   animator: {fileID: 895446792800387142}
   runSpeed: 32
-  startDashTime: 0.15
+  startDashTime: 0.1
   dashRate: 3
   walljumpVertical: 14
-  walljumpHorizontal: 15
+  walljumpHorizontal: 20
   busy: 0
-  wallJump: 0
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 55
