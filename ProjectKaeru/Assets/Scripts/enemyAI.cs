@@ -79,8 +79,8 @@ public class enemyAI : MonoBehaviour
         //Consider using Time.fixedDeltaTime instead of time.deltaTime
         //Change how enemyAttackRange works
         //maybe put the hixbox collider check outside of the if statements. Like check if the player is within that hitbox
+        //Make the skeleton a prefab
     {
-        Collider2D player = 
         if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyAttackRange) //If in attack range, try to attack the player
         {
             //Maybe set canIMove to false during this time
@@ -92,8 +92,10 @@ public class enemyAI : MonoBehaviour
                 Collider2D player = Physics2D.OverlapCircle(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
                 //Tells the player they've been hit
                 //Only works if the player is actually hit by the attack
-                player.GetComponent<PlayerCombat>().hitByEnemy(damage);
-                
+                if (player != null)
+                {
+                    player.GetComponent<PlayerCombat>().hitByEnemy(damage);
+                }
                 //Collider2D[] playerArray = Physics2D.OverlapCircleAll(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
                 //for (int i = 0; i < playerArray.Length; i++)
                 //{
