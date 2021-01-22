@@ -5,41 +5,47 @@ using System;
 
 
 /* TODO:
- * If the player crosses over the hitbox of the target we want to preserve the last angle from right before they cross over the target and use that as an angle to launch the player real high
- * It also kinda doesn't work with horizontal velocity because the player movement overwrites it
+ * Find more permanent control scheme for grappling hook and attacking
+ * Create the swing?
+ * Disable all player movement when grappling (They can currently dash and attack)
  */
 public class GrappleHook : MonoBehaviour
 {
     [SerializeField] private LayerMask grappleable;
-    public Transform grapplePointUL;
-    public Transform grapplePointBR;
-    public Rigidbody2D rb;
+    public Transform grapplePointUL; // Upper left corner of grapple hitbox
+    public Transform grapplePointBR; // Bottom right corner of grapple hitbox
+    public Rigidbody2D rb; // Ridgidbody of the player
 
-    private Collider2D lastClosest;
-    public PlayerController controller;
+    private Collider2D lastClosest; // The previous grappleable point that the player was closest to
+    public PlayerController controller; // The PlayerController script. Used only to change the "busy" boolean value to prevent player movement while grappling
 
-    private bool grapple = false;
-    private bool wasGrapple = false;
-    private bool grappling = false;
+    private bool grapple = false; // Detects the first time the player clicks wto grapple
+    private bool wasGrapple = false; // Whether or not the player can grapple again
+    private bool grappling = false; // Whether or not the player is graplped to a target
 
-    private Vector2 angle;
+    private Vector2 angle; // The angle the player is moved at
 
-    public float flingTime;
-    private float myFlingTime;
+    public int grappleVelo = 30; // Speed at which player grapples to target
+    public int flingVelo = 22; // Speed at which player is launched upon reaching target
 
+    public float flingTime; // The amount of time the player's control is stopped also how long horizontal force is added to the player
+    private float myFlingTime; // Current time until the player can move again
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //If the player clicks and isn't currenlty grappling then try to grapple
         if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling && !wasGrapple)
         {
             grapple = true;
         }
 
+        //If the player's control is disabled then count down until its reenabled
         if (controller.busy && myFlingTime > 0)
         {
             myFlingTime -= Time.deltaTime;
         }
+        // Re enable player control
         else 
         {
             controller.busy = false;
@@ -47,17 +53,14 @@ public class GrappleHook : MonoBehaviour
             myFlingTime = 0;
 
         }
-        /*if (Input.GetKeyUp(KeyCode.Mouse0) && grapple)
-        {
-            //grapple = false;
-            //wasGrapple = true;
-        }*/
     }
 
     void FixedUpdate()
     {
+        //Find all grapple points in the hitbox rectangle
         Collider2D[] colliders = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
 
+        //Iterate over them and find the closest target
         if (colliders.Length > 0)
         {
             Collider2D closestPoint = colliders[0];
@@ -72,6 +75,7 @@ public class GrappleHook : MonoBehaviour
                 }
             }
 
+            //Highlight the closest target and dehighlight the previous closest target if that applies
             if (lastClosest == null)
             {
                 lastClosest = closestPoint;
@@ -84,33 +88,28 @@ public class GrappleHook : MonoBehaviour
             closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
 
             float dis = 0f;
-
+            //This statement is only called the first time that the player grapples and sets the direction the player will move and removes control from the player for a bit
             if (grapple)
             {
                 angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
                 dis = angle.magnitude;
                 angle.Normalize();
+
                 controller.busy = true;
                 rb.gravityScale = 0f;
+
                 grapple = false;
                 grappling = true;
-                //wasGrapple = false;
-            }
-            //If clicking then activate grapple
-            if (grappling)
-            {
-                 rb.velocity = angle * 30;   
             }
 
-            //If the mouse was released early we're going to give the player a boost of force 
-            /*if (wasGrapple)
+            //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
+            if (grappling)
             {
-                controller.busy = false;
-                rb.gravityScale = controller.gravityStore;
-                //rb.AddForce(angle * 500);
-                wasGrapple = false;
-            }*/
+                 rb.velocity = angle * grappleVelo;   
+            }
+
         }
+        // If there are no targets in range don't highlight any of them
         else
         {
             if (lastClosest != null)
@@ -118,27 +117,25 @@ public class GrappleHook : MonoBehaviour
                 lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
                 lastClosest = null;
             }
-            
-            wasGrapple = false;
-            grapple = false;
         }
     }
 
+    // When the player enters a target (any of them rn not the one you specifically grapple too oops) then we give them one last boost of force in the direction they were going before
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
         {
             controller.busy = true;
             myFlingTime = flingTime;
-            rb.gravityScale = controller.gravityStore;
-            rb.velocity = angle * 25;
+            rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
+            rb.velocity = angle * flingVelo;
             wasGrapple = true;
             grappling = false;
         }
     }
 
-
-    //You occasionaly lose the power to grapple with this code for some reason -Bren
+    // This prevents the player from firing their grapple again when inside a target which would have werid effects, might not be necassary if we disable grapple points after the player uses them
+    //You occasionaly lose the power to grapple with this code for some reason but it might be fixed now idk -Bren
     private void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Grappleable") && !wasGrapple)
