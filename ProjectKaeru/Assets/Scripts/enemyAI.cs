@@ -71,7 +71,7 @@ public class enemyAI : MonoBehaviour
         {
             if (path == null)
                 return;
-
+            
             if (currentWaypoint >= path.vectorPath.Count)
             {
                 reachedEndOfPath = true;
@@ -81,6 +81,7 @@ public class enemyAI : MonoBehaviour
             {
                 reachedEndOfPath = false;
             }
+            
             
             if (canIMove) //If I can move, move towards the current waypoint
             {
