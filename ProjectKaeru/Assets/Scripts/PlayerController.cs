@@ -93,85 +93,89 @@ public class PlayerController : MonoBehaviour
 		/*
 		 * Most of the code in this part is just checking for the player's input and setting the corresponding value accordingly if that action can be taken
 		 */
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (Input.GetButtonDown("Jump") && !attacking && m_Grounded)
+		if (!busy)
 		{
-			jump = true;
-			animator.SetBool("IsJumping", true);
-		}
-		if (Input.GetButtonDown("Crouch"))
-		{
-			crouch = true;
-		}
-		else if (Input.GetButtonUp("Crouch"))
-		{
-			crouch = false;
-		}
+			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (GetComponent<PlayerCombat>().isAttacking && !isGrabbing)
-		{
-			attacking = true;
-		}
-		else
-		{
-			attacking = false;
-		}
-
-		/*
-		 * This code allows the player to dash if its not on cooldown
-		 */
-		if (Time.time >= nextDashTime)
-		{
-			if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
+			if (Input.GetButtonDown("Jump") && !attacking && m_Grounded)
 			{
-				dashing = true;
-				nextDashTime = (Time.time + 1f / dashRate) + dashTime;
-				animator.SetBool("IsJumping", false);
-			}
-		}
-
-		/*
-		 * This code handles the walljump
-		 */
-		canGrab = Physics2D.OverlapCircle(wallGrabPoint.position, .2f, m_WhatIsWall);
-		isGrabbing = false;
-		//If we're against a wall we can grab and not on the floor...
-		if (canGrab && !m_Grounded)
-		{
-		    //...and we're holding a direction then grab the wall
-			if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
-			{
-				isGrabbing = true;
-			}
-		}
-		if (isGrabbing == true)
-		{
-			//If we're grabbing the wall and we press jump then we preform a walljump
-			//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
-			if (Input.GetButtonDown("Jump"))
-			{
-				isWalljumping = true;
-				isGrabbing = false;
 				jump = true;
 				animator.SetBool("IsJumping", true);
-				Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
+			}
+			if (Input.GetButtonDown("Crouch"))
+			{
+				crouch = true;
+			}
+			else if (Input.GetButtonUp("Crouch"))
+			{
+				crouch = false;
 			}
 
-		}
-		else
-		{
-			animator.SetBool("IsGrabbing", false);
-		}
+			if (GetComponent<PlayerCombat>().isAttacking && !isGrabbing)
+			{
+				attacking = true;
+			}
+			else
+			{
+				attacking = false;
+			}
 
-		/*
-		 * This is where most of the values are passed to the animator if that applies
-		 */
-		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-		animator.SetBool("IsCrouching", crouch);
-		animator.SetBool("IsGrounded", m_Grounded);
-		animator.SetBool("IsDashing", dashing);
-		animator.SetBool("IsGrabbing", isGrabbing);
+			/*
+			 * This code allows the player to dash if its not on cooldown
+			 */
+			if (Time.time >= nextDashTime)
+			{
+				if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
+				{
+					dashing = true;
+					nextDashTime = (Time.time + 1f / dashRate) + dashTime;
+					animator.SetBool("IsJumping", false);
+				}
+			}
+
+			/*
+			 * This code handles the walljump
+			 */
+			canGrab = Physics2D.OverlapCircle(wallGrabPoint.position, .2f, m_WhatIsWall);
+			isGrabbing = false;
+			//If we're against a wall we can grab and not on the floor...
+			if (canGrab && !m_Grounded)
+			{
+				//...and we're holding a direction then grab the wall
+				if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+				{
+					isGrabbing = true;
+				}
+			}
+			if (isGrabbing == true)
+			{
+				//If we're grabbing the wall and we press jump then we preform a walljump
+				//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
+				if (Input.GetButtonDown("Jump"))
+				{
+					isWalljumping = true;
+					isGrabbing = false;
+					jump = true;
+					animator.SetBool("IsJumping", true);
+					Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
+				}
+
+			}
+			else
+			{
+				animator.SetBool("IsGrabbing", false);
+			}
+
+			/*
+			 * This is where most of the values are passed to the animator if that applies
+			 */
+			animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+			animator.SetBool("IsCrouching", crouch);
+			animator.SetBool("IsGrounded", m_Grounded);
+			animator.SetBool("IsDashing", dashing);
+			animator.SetBool("IsGrabbing", isGrabbing);
+		}
 	}
 
 	//I'm pretty sure this is a relic of when the two scripts were seperate and I can move this code into where I update m_IsGrounded but it works and I'm too lazy deal with the possibility that it doesn't work -Bren
