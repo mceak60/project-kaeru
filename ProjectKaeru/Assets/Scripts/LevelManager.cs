@@ -10,25 +10,27 @@ public class LevelManager : MonoBehaviour
     public Transform respawnPoint;
     public GameObject playerPrefab;
     public GameObject playerCamera;
-    
-    private GameObject player;
-    private Transform playerTransform;
 
     //When the game starts, create a new player and have the camera follow it
     private void Awake()
     {
         instance = this;
-        player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
-        playerTransform = player.GetComponent<Transform>();
+        GameObject player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
+        Transform playerTransform = player.GetComponent<Transform>();
 
         CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
         vcam.Follow = playerTransform;
         vcam.Follow = playerTransform;
     }
 
-    //Creates teleports the player to the respawn position
+    //Creates a new player at the respawn point and has the camera follow them
     public void Respawn()
     {
-        playerTransform.position = respawnPoint.position;
+        GameObject player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
+        Transform playerTransform = player.GetComponent<Transform>();
+
+        CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
+        vcam.Follow = playerTransform;
+        vcam.Follow = playerTransform;
     }
 }

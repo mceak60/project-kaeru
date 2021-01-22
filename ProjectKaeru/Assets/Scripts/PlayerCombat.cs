@@ -24,12 +24,12 @@ public class PlayerCombat : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             isAttacking = false;
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            /*if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
                 isAttacking = true;
-            }
+            }*/
             //Play animation
             animator.SetBool("IsAttacking", isAttacking);
         }

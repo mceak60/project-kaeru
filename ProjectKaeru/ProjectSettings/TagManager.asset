@@ -6,8 +6,7 @@ TagManager:
   tags:
   - Death
   - Background
-  - DashPowerup
-  - WallClingPowerup
+  - Grappleable
   layers:
   - Default
   - TransparentFX
@@ -21,7 +20,7 @@ TagManager:
   - Enemy
   - Death
   - Background
-  - FloorsNWalls
+  - Grappleable
   - 
   - 
   - 
