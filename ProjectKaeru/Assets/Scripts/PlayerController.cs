@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 	public float walljumpHorizontal = 50f; // How much horizontal force is applied to the player when they walljump
 
 	public bool busy = false;
-	public bool wallJump = false;
+
 
 	[SerializeField] private LayerMask m_WhatIsWall; // What is considered a wall the player can jump off of
 
@@ -154,12 +154,11 @@ public class PlayerController : MonoBehaviour
 				//I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
 				if (Input.GetButtonDown("Jump"))
 				{
-					//isWalljumping = true;
+					isWalljumping = true;
 					isGrabbing = false;
-					//jump = true;
-					wallJump = true;
+					jump = true;
 					animator.SetBool("IsJumping", true);
-					//Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
+					Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
 				}
 
 			}
@@ -187,10 +186,6 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (wallJump)
-		{
-			jump = true;
-		}
 		//Applies most of the physics to the player
 		if (!isWalljumping && !busy)
 		{
@@ -198,7 +193,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//We set jump to false right after move so we don't continue applying the upward force
-			jump = false;
+		jump = false;
 
 		//Updates the time keeping values for dashing if that applies
 		if (dashing)
@@ -240,37 +235,34 @@ public class PlayerController : MonoBehaviour
 	public void Move(float move, bool crouch, bool jump, bool attack, bool dash, bool grab)
 	{
 		// this statements prevents the player from moving during the first part of the walljump, its how a lott of games do it
-
-		/*
-		* This applies all the physics of the walljump
-	    */
-		if (grab)
-		{
-
-			m_Rigidbody2D.gravityScale = 0f;
-			m_Rigidbody2D.velocity = Vector2.zero;
-
-			if (jump)
-			{
-				wallJumpCounter = wallJumpTime;
-				if (move < 0)
-					m_Rigidbody2D.velocity = new Vector2(walljumpHorizontal, walljumpVertical);
-				else
-					m_Rigidbody2D.velocity = new Vector2(-1 * walljumpHorizontal, walljumpVertical);
-				m_Rigidbody2D.gravityScale = gravityStore;
-
-				isWalljumping = false;
-				wallJump = false;
-				//Flip();
-			}
-		}
-		else
-		{
-			m_Rigidbody2D.gravityScale = gravityStore;
-		}
 		if (wallJumpCounter <= 0)
 		{
-			
+			/*
+			 * This applies all the physics of the walljump
+			 */
+			if (grab)
+			{
+
+				m_Rigidbody2D.gravityScale = 0f;
+				m_Rigidbody2D.velocity = Vector2.zero;
+
+				if (jump)
+				{
+					wallJumpCounter = wallJumpTime;
+					if(move < 0)
+						m_Rigidbody2D.velocity = new Vector2(walljumpHorizontal, walljumpVertical);
+					else
+						m_Rigidbody2D.velocity = new Vector2(-1 * walljumpHorizontal, walljumpVertical);
+					m_Rigidbody2D.gravityScale = gravityStore;
+
+					isWalljumping = false;
+					//Flip();
+				}
+			}
+			else
+			{
+				m_Rigidbody2D.gravityScale = gravityStore;
+			}
 
 			/*
 			 * This part applies the dash force
@@ -371,7 +363,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			wallJumpCounter -= Time.fixedDeltaTime;
+			wallJumpCounter -= Time.deltaTime;
 		}
 	}
 
