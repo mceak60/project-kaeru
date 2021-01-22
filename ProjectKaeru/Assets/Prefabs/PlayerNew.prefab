@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5416c0318b8c348b7a06f020e9af92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 650
+  m_JumpForce: 700
   m_CrouchSpeed: 0
   m_MovementSmoothing: 0.01
   m_AirControl: 1
@@ -265,8 +265,8 @@ MonoBehaviour:
   m_CrouchDisableCollider: {fileID: 895446792800387138}
   m_AttackSpeed: 0.01
   dashSpeed: 20
-  fallMultiplier: 4
-  lowJumpMultiplier: 10
+  fallMultiplier: 3
+  lowJumpMultiplier: 5
   wallGrabPoint: {fileID: 6140246176250638282}
   gravityStore: 0
   wallJumpTime: 0.1
@@ -434,7 +434,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3762522083913043818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75000095, y: 7, z: 0}
+  m_LocalPosition: {x: -10, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 895446792800387136}
