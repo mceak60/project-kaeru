@@ -35,7 +35,6 @@ public class GrappleHook : MonoBehaviour
     private float myFlingTime; // Current time until the player can move again
 
     public LineRenderer lr;
-    public GameObject emissionPoint;
 
 
     void Update()
@@ -122,17 +121,12 @@ public class GrappleHook : MonoBehaviour
 
                 grapple = false;
                 grappling = true;
-
-                lr.positionCount = 2;
-                lr.SetPosition(0, emissionPoint.transform.position);
-                lr.SetPosition(1, closestPoint.gameObject.transform.position);
             }
 
             //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
             if (grappling)
             {
                 rb.velocity = angle * grappleVelo;
-                lr.SetPosition(0, emissionPoint.transform.position);
             }
 
         }
@@ -159,7 +153,6 @@ public class GrappleHook : MonoBehaviour
             rb.velocity = angle * flingVelo;
             wasGrapple = true;
             grappling = false;
-            lr.positionCount = 0;
         }
         else if (!col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
         {
@@ -168,8 +161,6 @@ public class GrappleHook : MonoBehaviour
             wasGrapple = false;
             grappling = false;
         }
-
-        
     }
 
     // This prevents the player from firing their grapple again when inside a target which would have werid effects, might not be necassary if we disable grapple points after the player uses them
