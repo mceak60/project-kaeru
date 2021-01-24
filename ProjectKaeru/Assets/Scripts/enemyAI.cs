@@ -8,13 +8,18 @@ public class enemyAI : MonoBehaviour
 {
     public Transform target; //where we are pathfinding to
 
+    public Animator animator; //animator to control the enemy's animations
+
     public float enemyDetectionRange = 6.5f; //Distance before this enemy starts pathfinding to the player
     public float enemyAttackRange = 1f; //Distance between the player and the enemy where the enemy executes an attack
 
-    public Transform groundDetection; //Helps with ground detection (don't walk off the side of a cliff)
+    public Transform groundDetector; //Helps with ground detection (don't walk off the side of a cliff)
     public float distanceToGround = 2f; //Distance of our ray to the ground. Default 2
     private bool canIMove = true; //Variable helps determine if the enemy can move. Useful for not walking off a cliff
     private bool facingLeft = true; //Am I facing left?
+
+    public Transform wallDetector; //Helps with wall detection (turn around when we bump into a wall)
+    public float distanceToWall = 0.15f; //Distance of our ray to the wall. Default 0.15f
 
     public float attackSpeed = 400f; //speed at which the enemy moves when engaing the player
     public float patrolSpeed = 200f; //speed at which the enemy moves when idling
@@ -74,13 +79,12 @@ public class enemyAI : MonoBehaviour
 
     void FixedUpdate()
         //Current Problems:
-        //Enemy needs a walkin animation
         //We constantly pathfind, but it should be possible to limit it to only pathfind when the player is in range
-        //There's a random debug statement somewhere in like the source code that I need to remove
-        //Consider using Time.fixedDeltaTime instead of time.deltaTime
-        //Change how enemyAttackRange works
-        //maybe put the hixbox collider check outside of the if statements. Like check if the player is within that hitbox
         //Create a wall detection gameobject so we can turn around when we bump into a wall
+        //Work on animation transitions
+        //Combine this script with the basic enemy script
+        //Figure out how Mac's attack script works. His hitboxes might actually last for more than a frame.
+        //Add the wall detection gameobject child
 
     {
         if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyAttackRange) //If in attack range, try to attack the player
@@ -91,6 +95,7 @@ public class enemyAI : MonoBehaviour
                 //we can attack
 
                 //throw up a collider to try to attack the player
+                animator.SetTrigger("Attack");
                 Collider2D player = Physics2D.OverlapCircle(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
                 //Tells the player they've been hit
                 //Only works if the player is actually hit by the attack
@@ -129,7 +134,7 @@ public class enemyAI : MonoBehaviour
             if (canIMove) //If I can move, move towards the current waypoint
             {
                 Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized; //direction to move in
-                Vector2 force = direction * attackSpeed * Time.deltaTime; //force in our direction
+                Vector2 force = direction * attackSpeed * Time.fixedDeltaTime; //force in our direction
                 rb.AddForce(force); //adding force to the rigid body
                 facing(force);
             } 
@@ -161,16 +166,16 @@ public class enemyAI : MonoBehaviour
         {
             Vector2 force;
             if (facingLeft)
-                force = new Vector2(-1,0) * patrolSpeed * Time.deltaTime; //force to the left
+                force = new Vector2(-1,0) * patrolSpeed * Time.fixedDeltaTime; //force to the left
             else
-                force = new Vector2(1, 0) * patrolSpeed * Time.deltaTime; //force to the right
+                force = new Vector2(1, 0) * patrolSpeed * Time.fixedDeltaTime; //force to the right
             rb.AddForce(force); //adding force to the rigid body
-            
 
             edgeDetection();
-            if(!canIMove)
+            wallDetection();
+            if (!canIMove)
             {
-                transform.localScale = new Vector3(transform.localScale.x * -1f, 1f, 1f); //flip our direction if we're on a ledge
+                transform.localScale = new Vector3(transform.localScale.x * -1f, 1f, 1f); //flip our direction if we're on a ledge or at a wall
                 canIMove = true; //reset canIMove to true
                 facingLeft = !facingLeft;
             }
@@ -196,16 +201,32 @@ public class enemyAI : MonoBehaviour
 
     void edgeDetection() //stops enemy from walking off the side of a cliff
     {
-        if (!Physics2D.Raycast(groundDetection.position, Vector2.down, distanceToGround, LayerMask.GetMask("FloorsNWalls"))) //if we dont see ground ahead. Stop moving
+        if (!Physics2D.Raycast(groundDetector.position, Vector2.down, distanceToGround, LayerMask.GetMask("FloorsNWalls"))) //if we dont see ground ahead. Stop moving
         {
             if (canIMove) //only do the next line when we first turn off canIMove
                 rb.velocity = new Vector2(0, rb.velocity.y); //Set velocity to zero to stop all horizontal momentum
             canIMove = false;
+            animator.SetBool("Idle", true); //enter idle animation when on the ledge and unable to approach further
 
         }
         else
         {
             canIMove = true;
+            animator.SetBool("Idle", false); //exit idle animation when we start moving again
+        }
+    }
+
+    void wallDetection() //stops enemy from aimlessly walking into a wall forever
+    {
+        if (facingLeft)
+        {
+            if (Physics2D.Raycast(wallDetector.position, Vector2.left, distanceToWall, LayerMask.GetMask("FloorsNWalls")))
+                canIMove = false; //If we hit a wall facing left, then face right.
+        }
+        else
+        {
+            if (Physics2D.Raycast(wallDetector.position, Vector2.right, distanceToWall, LayerMask.GetMask("FloorsNWalls")))
+                canIMove = false; ; //If we hit a wall facing right, then face left.
         }
     }
 

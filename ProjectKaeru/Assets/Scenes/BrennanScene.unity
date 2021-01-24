@@ -6534,12 +6534,17 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287351741}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.45244, y: -0.88811815, z: -10}
+  m_LocalPosition: {x: -29.452442, y: -0.8881196, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1364994705}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &332583645 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4034039780617909245, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+  m_PrefabInstance: {fileID: 4034039782048584284}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &411412565
 GameObject:
   m_ObjectHideFlags: 0
@@ -7136,7 +7141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACAn+ufy3WKbAIAABEFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzoUxYD7cW2sI6YGQCe3k4ouw1liDLHkkOUAy/PeuZBu71BeWt19v3679Rbg0JaRW6Y3mbKsYkO8D4mzybdA5n+FCj0ru+Se0Me+c2dwFUR/zRi1XiI9dmlEFWM3TH/IoXHCAYCV5pnSxZkeIlbEG4YwKA+jSyrpsidDXgFzwZxi5lCtak4WzPtGKgsENzRSkBd2FzkazwD3hssmYjsIIn2WTNh9NZstZMF0Pg4UvUMlU0KIE5qbp6iynbcexD5M4ZxPhZkqVENw0JIm9ll6EmJamwhExgHGKQ3tmwWgxQyQHfsytq9jP32WZAduIoul1xTXKVxcmP1WtaUHNqab2QUXlWoVBNPe86qrb/wKGNe1Mq+K5bTwOXBOb8/T0Rq8pNbaneh9edeTHXqIzFSd6EPCeg3xRG60qydBpdeVSKwOTVff3PlucQ3rq8JrqA1iVnebtktsVuxlufvxLLHhx8FqGNbAXymvuLwM0bucXEvZ3Y5oSiDoWfwz8psf+gTWOJ66NRVczpXT0DqrSLpSsvWZumsrGSkvwcEO6BEmFvb5iGfu4wwdfr+2D54m6V6lp3vjaN+QhxcNdfBA8uF7V+b4sk6vzFky+q6zgEjrSzvGCOsVKyvrE+pq0aftKZzTtpR0rzv49LcKiYBHSeRocxtF8EqbDyThCM1tOF2GwmEFG/O1xiXNS8VoTbeTBrcmuuMQ7a78wg42mpT93pul5wz8L1ZOcy0ztUw0gd3WFO3HQ2ATfTLZmHAXag7Vc+n2Tr4QIlZ6AJfdCiZ90fbGaJl2VhJT8Q1mHJCT2n5SE3MjtL1BLAwQUAAAICAAAgJ/r/wpOPmwAAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0UoqlgblJolmyQZKhpZmRSbKukaElkJlmYWxuYmBumpqmFAtUX1JZkOqXmJsK0ROQWJKRlpmXkpmXrudelJniDjJaKbYWAFBLAQItABQAAAgIAACAn+ufy3WKbAIAABEFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACAn+v/Ck4+bAAAAHgAAAAJACQAAAAAAAAAAAAAALkCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAcAMAAAAA
+    dataString: UEsDBBQAAAgIAACQn+ufy3WKbAIAABEFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzoUxYD7cW2sI6YGQCe3k4ouw1liDLHkkOUAy/PeuZBu71BeWt19v3679Rbg0JaRW6Y3mbKsYkO8D4mzybdA5n+FCj0ru+Se0Me+c2dwFUR/zRi1XiI9dmlEFWM3TH/IoXHCAYCV5pnSxZkeIlbEG4YwKA+jSyrpsidDXgFzwZxi5lCtak4WzPtGKgsENzRSkBd2FzkazwD3hssmYjsIIn2WTNh9NZstZMF0Pg4UvUMlU0KIE5qbp6iynbcexD5M4ZxPhZkqVENw0JIm9ll6EmJamwhExgHGKQ3tmwWgxQyQHfsytq9jP32WZAduIoul1xTXKVxcmP1WtaUHNqab2QUXlWoVBNPe86qrb/wKGNe1Mq+K5bTwOXBOb8/T0Rq8pNbaneh9edeTHXqIzFSd6EPCeg3xRG60qydBpdeVSKwOTVff3PlucQ3rq8JrqA1iVnebtktsVuxlufvxLLHhx8FqGNbAXymvuLwM0bucXEvZ3Y5oSiDoWfwz8psf+gTWOJ66NRVczpXT0DqrSLpSsvWZumsrGSkvwcEO6BEmFvb5iGfu4wwdfr+2D54m6V6lp3vjaN+QhxcNdfBA8uF7V+b4sk6vzFky+q6zgEjrSzvGCOsVKyvrE+pq0aftKZzTtpR0rzv49LcKiYBHSeRocxtF8EqbDyThCM1tOF2GwmEFG/O1xiXNS8VoTbeTBrcmuuMQ7a78wg42mpT93pul5wz8L1ZOcy0ztUw0gd3WFO3HQ2ATfTLZmHAXag7Vc+n2Tr4QIlZ6AJfdCiZ90fbGaJl2VhJT8Q1mHJCT2n5SE3MjtL1BLAwQUAAAICAAAkJ/r/wpOPmwAAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0UoqlgblJolmyQZKhpZmRSbKukaElkJlmYWxuYmBumpqmFAtUX1JZkOqXmJsK0ROQWJKRlpmXkpmXrudelJniDjJaKbYWAFBLAQItABQAAAgIAACQn+ufy3WKbAIAABEFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACQn+v/Ck4+bAAAAHgAAAAJACQAAAAAAAAAAAAAALkCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAcAMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -8124,12 +8129,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 332583645}
+    - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: hitboxRadius
       value: 0.745
       objectReference: {fileID: 0}
     - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: attackCooldown
       value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
+      propertyPath: distanceToWall
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4034039780617909184, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: enemyAttackRange
@@ -8141,7 +8154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4034039780617909244, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4034039780617909247, guid: e23f611821124114e9f1c8c02ff21d79, type: 3}
       propertyPath: m_RootOrder
