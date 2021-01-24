@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class ItemManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         // Handles collection of dash powerup
-        if(col.gameObject.CompareTag("DashPowerup"))
+        if (col.gameObject.CompareTag("DashPowerup"))
         {
             Destroy(col.gameObject);
             hasDashPowerup = true;

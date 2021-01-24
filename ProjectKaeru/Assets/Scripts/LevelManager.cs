@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
@@ -10,7 +11,7 @@ public class LevelManager : MonoBehaviour
     public Transform respawnPoint;
     public GameObject playerPrefab;
     public GameObject playerCamera;
-    
+
     private GameObject player;
     private Transform playerTransform;
 
@@ -22,7 +23,6 @@ public class LevelManager : MonoBehaviour
         playerTransform = player.GetComponent<Transform>();
 
         CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
-        vcam.Follow = playerTransform;
         vcam.Follow = playerTransform;
     }
 
