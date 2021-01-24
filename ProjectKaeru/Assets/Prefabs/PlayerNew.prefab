@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 8273311361126527353}
   - component: {fileID: 2276758851224923948}
   - component: {fileID: 4479447833693287716}
+  - component: {fileID: 9181880674094745462}
   m_Layer: 8
   m_Name: PlayerNew
   m_TagString: Untagged
@@ -280,6 +281,7 @@ MonoBehaviour:
   walljumpHorizontal: 15
   busy: 0
   wallJump: 0
+  itemManager: {fileID: 9181880674094745462}
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 55
@@ -426,6 +428,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &9181880674094745462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895446792800387166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1eeeadaa86f4145a89e701eedba7d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasDashPowerup: 0
+  hasWallClingPowerup: 0
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
