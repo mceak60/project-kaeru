@@ -9,6 +9,7 @@ TagManager:
   - Grappleable
   - DashPowerup
   - WallClingPowerup
+  - GrapplingHookPowerup
   layers:
   - Default
   - TransparentFX

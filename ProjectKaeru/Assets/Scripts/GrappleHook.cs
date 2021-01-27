@@ -35,13 +35,18 @@ public class GrappleHook : MonoBehaviour
     public LineRenderer lr;
     public GameObject emissionPoint;
 
+    public ItemManager itemManager; // Reference to ItemManager script
+
 
     void Update()
     {
         //If the player clicks and isn't currenlty grappling then try to grapple
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling && !wasGrapple)
+        if(itemManager.hasGrapplingHookPowerup)
         {
-            grapple = true;
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling && !wasGrapple)
+            {
+                grapple = true;
+            }
         }
 
         //If the player's control is disabled then count down until its reenabled
@@ -61,88 +66,91 @@ public class GrappleHook : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Find all grapple points in the hitbox rectangle
-        Collider2D[] coll = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
-        List<Collider2D> colli = new List<Collider2D>();
-
-        // See if the line of sight to them is obstructed by an object
-        for (int i = 0; i < coll.Length; i++)
+        if (itemManager.hasGrapplingHookPowerup)
         {
-            Vector2 raycastAngle = new Vector2(coll[i].gameObject.transform.position.x - gameObject.transform.position.x, coll[i].gameObject.transform.position.y - gameObject.transform.position.y);
-            RaycastHit2D hitWall = Physics2D.Raycast(transform.position, raycastAngle, 20, grappleableInterupt);
-            RaycastHit2D hitPoint = Physics2D.Raycast(transform.position, raycastAngle, Mathf.Infinity, grappleable);
-            //If we don't hit a wall or we hit the target before we hit the wall then we can grapple to the target
-            if (hitWall.collider == null || hitPoint.distance <= hitWall.distance)
-            {
-                colli.Add(coll[i]);
-            }
-        }
+            //Find all grapple points in the hitbox rectangle
+            Collider2D[] coll = Physics2D.OverlapAreaAll(grapplePointUL.position, grapplePointBR.position, grappleable);
+            List<Collider2D> colli = new List<Collider2D>();
 
-        Collider2D[] colliders = colli.ToArray();
-
-        //Iterate over them and find the closest target
-        if (colliders.Length > 0)
-        {
-            Collider2D closestPoint = colliders[0];
-            double minDistance = 1000;
-            for (int i = 0; i < colliders.Length; i++)
+            // See if the line of sight to them is obstructed by an object
+            for (int i = 0; i < coll.Length; i++)
             {
-                double distance = Math.Sqrt(Math.Pow(colliders[i].gameObject.transform.position.x - gameObject.transform.position.x, 2) + Math.Pow(colliders[i].gameObject.transform.position.y - gameObject.transform.position.y, 2));
-                if (distance < minDistance)
+                Vector2 raycastAngle = new Vector2(coll[i].gameObject.transform.position.x - gameObject.transform.position.x, coll[i].gameObject.transform.position.y - gameObject.transform.position.y);
+                RaycastHit2D hitWall = Physics2D.Raycast(transform.position, raycastAngle, 20, grappleableInterupt);
+                RaycastHit2D hitPoint = Physics2D.Raycast(transform.position, raycastAngle, Mathf.Infinity, grappleable);
+                //If we don't hit a wall or we hit the target before we hit the wall then we can grapple to the target
+                if (hitWall.collider == null || hitPoint.distance <= hitWall.distance)
                 {
-                    minDistance = distance;
-                    closestPoint = colliders[i];
+                    colli.Add(coll[i]);
                 }
             }
 
-            //Highlight the closest target and dehighlight the previous closest target if that applies
-            if (lastClosest == null)
+            Collider2D[] colliders = colli.ToArray();
+
+            //Iterate over them and find the closest target
+            if (colliders.Length > 0)
             {
-                lastClosest = closestPoint;
+                Collider2D closestPoint = colliders[0];
+                double minDistance = 1000;
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    double distance = Math.Sqrt(Math.Pow(colliders[i].gameObject.transform.position.x - gameObject.transform.position.x, 2) + Math.Pow(colliders[i].gameObject.transform.position.y - gameObject.transform.position.y, 2));
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closestPoint = colliders[i];
+                    }
+                }
+
+                //Highlight the closest target and dehighlight the previous closest target if that applies
+                if (lastClosest == null)
+                {
+                    lastClosest = closestPoint;
+                }
+                else if (lastClosest != closestPoint)
+                {
+                    lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
+                    lastClosest = closestPoint;
+                }
+                closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
+
+                float dis = 0f;
+                //This statement is only called the first time that the player grapples and sets the direction the player will move and removes control from the player for a bit
+                if (grapple)
+                {
+                    angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
+                    dis = angle.magnitude;
+                    angle.Normalize();
+
+                    controller.busy = true;
+                    rb.gravityScale = 0f;
+
+                    grapple = false;
+                    grappling = true;
+
+                    lr.positionCount = 2;
+                    lr.SetPosition(0, emissionPoint.transform.position);
+                    lr.SetPosition(1, closestPoint.gameObject.transform.position);
+                }
+
+                //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
+                if (grappling)
+                {
+                    rb.velocity = angle * grappleVelo;
+                    lr.SetPosition(0, emissionPoint.transform.position);
+                }
+
             }
-            else if (lastClosest != closestPoint)
+            // If there are no targets in range don't highlight any of them
+            else
             {
-                lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
-                lastClosest = closestPoint;
-            }
-            closestPoint.GetComponent<SpriteRenderer>().color = Color.yellow;
-
-            float dis = 0f;
-            //This statement is only called the first time that the player grapples and sets the direction the player will move and removes control from the player for a bit
-            if (grapple)
-            {
-                angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
-                dis = angle.magnitude;
-                angle.Normalize();
-
-                controller.busy = true;
-                rb.gravityScale = 0f;
-
+                if (lastClosest != null)
+                {
+                    lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
+                    lastClosest = null;
+                }
                 grapple = false;
-                grappling = true;
-
-                lr.positionCount = 2;
-                lr.SetPosition(0, emissionPoint.transform.position);
-                lr.SetPosition(1, closestPoint.gameObject.transform.position);
             }
-
-            //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
-            if (grappling)
-            {
-                rb.velocity = angle * grappleVelo;
-                lr.SetPosition(0, emissionPoint.transform.position);
-            }
-
-        }
-        // If there are no targets in range don't highlight any of them
-        else
-        {
-            if (lastClosest != null)
-            {
-                lastClosest.GetComponent<SpriteRenderer>().color = Color.white;
-                lastClosest = null;
-            }
-            grapple = false;
         }
     }
 
