@@ -332,6 +332,7 @@ MonoBehaviour:
   flingTime: 0.15
   lr: {fileID: 4479447833693287716}
   emissionPoint: {fileID: 2093460603887534569}
+  itemManager: {fileID: 9181880674094745462}
 --- !u!120 &4479447833693287716
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -444,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasDashPowerup: 0
   hasWallClingPowerup: 0
+  hasGrapplingHookPowerup: 0
 --- !u!114 &7594635668924762217
 MonoBehaviour:
   m_ObjectHideFlags: 0

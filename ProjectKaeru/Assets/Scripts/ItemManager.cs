@@ -7,6 +7,7 @@ public class ItemManager : MonoBehaviour
 {
     public bool hasDashPowerup = false;
     public bool hasWallClingPowerup = false;
+    public bool hasGrapplingHookPowerup = false;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -21,6 +22,12 @@ public class ItemManager : MonoBehaviour
         {
             Destroy(col.gameObject);
             hasWallClingPowerup = true;
+        }
+        // Handles collection of grappling hook powerup
+        else if (col.gameObject.CompareTag("GrapplingHookPowerup"))
+        {
+            Destroy(col.gameObject);
+            hasGrapplingHookPowerup = true;
         }
     }
 }
