@@ -22493,6 +22493,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3392338203020194560, guid: c76c9c66293109e449055c31908fa064, type: 3}
+      propertyPath: hitboxRadius
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392338203020194560, guid: c76c9c66293109e449055c31908fa064, type: 3}
+      propertyPath: attackCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392338203020194560, guid: c76c9c66293109e449055c31908fa064, type: 3}
+      propertyPath: enemyAttackRange
+      value: 1.65
+      objectReference: {fileID: 0}
     - target: {fileID: 3392338203020194563, guid: c76c9c66293109e449055c31908fa064, type: 3}
       propertyPath: m_Name
       value: Skeleton (1)
@@ -22539,6 +22551,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3392338203020194571, guid: c76c9c66293109e449055c31908fa064, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392338203020194572, guid: c76c9c66293109e449055c31908fa064, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392338203020194575, guid: c76c9c66293109e449055c31908fa064, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392338203020194575, guid: c76c9c66293109e449055c31908fa064, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
