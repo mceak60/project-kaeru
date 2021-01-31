@@ -10,6 +10,7 @@ TagManager:
   - DashPowerup
   - WallClingPowerup
   - GrapplingHookPowerup
+  - SceneTransition
   layers:
   - Default
   - TransparentFX

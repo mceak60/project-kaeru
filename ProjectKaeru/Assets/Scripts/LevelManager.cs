@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
 
     public Transform respawnPoint;
+    public GameObject respawnPoints;
     public GameObject playerPrefab;
     public GameObject playerCamera;
 

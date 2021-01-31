@@ -305,6 +305,7 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls: []
+  levelLoad: {fileID: 6257413437657477621, guid: 53d4578e17e5b8147a08548125dc0e61, type: 3}
 --- !u!114 &2276758851224923948
 MonoBehaviour:
   m_ObjectHideFlags: 0
