@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject player;
     private Transform playerTransform;
+    private Health playerHealth;
 
     //When the game starts, create a new player and have the camera follow it
     private void Awake()
@@ -21,6 +22,7 @@ public class LevelManager : MonoBehaviour
         instance = this;
         player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
         playerTransform = player.GetComponent<Transform>();
+        playerHealth = player.GetComponent<Health>();
 
         CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
         vcam.Follow = playerTransform;
@@ -30,5 +32,6 @@ public class LevelManager : MonoBehaviour
     public void Respawn()
     {
         playerTransform.position = respawnPoint.position;
+        playerHealth.health = playerHealth.numHearts;
     }
 }
