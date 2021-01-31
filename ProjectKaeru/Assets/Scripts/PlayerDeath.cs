@@ -13,9 +13,7 @@ public class PlayerDeath : MonoBehaviour
         {
             if (col.gameObject.CompareTag("Death"))
             {
-                isDead = true;
-                LevelManager.instance.Respawn();
-                isDead = false;
+                Die();
             }
         }
     }
@@ -32,10 +30,15 @@ public class PlayerDeath : MonoBehaviour
         {
             if (col.gameObject.CompareTag("Death"))
             {
-                isDead = true;
-                LevelManager.instance.Respawn();
-                isDead = false;
+                Die();
             }
         }
+    }
+
+    public void Die()
+    {
+        isDead = true;
+        LevelManager.instance.Respawn();
+        isDead = false;
     }
 }
