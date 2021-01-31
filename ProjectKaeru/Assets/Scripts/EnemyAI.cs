@@ -80,26 +80,27 @@ public class EnemyAI : MonoBehaviour
     void FixedUpdate()
     //Current Problems:
     //We constantly pathfind, but it should be possible to limit it to only pathfind when the player is in range
-    //Create a wall detection gameobject so we can turn around when we bump into a wall
     //Work on animation transitions
     //Combine this script with the basic enemy script
     //Figure out how Mac's attack script works. His hitboxes might actually last for more than a frame.
-    //Add the wall detection gameobject child
 
     {
-        if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyAttackRange) //If in attack range, try to attack the player
+        //Debug.Log(Math.Abs(Vector3.Distance(target.transform.position, transform.position)));
+        Collider2D rangeHitbox = Physics2D.OverlapCircle(transform.position, enemyAttackRange, LayerMask.GetMask("Player"));
+        if (rangeHitbox != null) //If in attack range, try to attack the player
         {
             //Maybe set canIMove to false during this time
+            animator.SetBool("Idle", true);
             if (attackCooldownTracker <= 0)
             {
                 //we can attack
 
                 //throw up a collider to try to attack the player
                 animator.SetTrigger("Attack");
-                Collider2D player = Physics2D.OverlapCircle(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
+                Collider2D attackHitbox = Physics2D.OverlapCircle(attackPos.position, hitboxRadius, LayerMask.GetMask("Player"));
                 //Tells the player they've been hit
                 //Only works if the player is actually hit by the attack
-                if (player != null)
+                if (attackHitbox != null)
                 {
                     //player.GetComponent<PlayerCombat>().hitByEnemy(damage);
                 }
@@ -114,6 +115,7 @@ public class EnemyAI : MonoBehaviour
             {
                 attackCooldownTracker -= Time.fixedDeltaTime;
             }
+            animator.SetBool("Idle", false);
 
         }
         else if (Math.Abs(Vector3.Distance(target.transform.position, transform.position)) < enemyDetectionRange) //If in detect range, move towards the player
@@ -234,6 +236,9 @@ public class EnemyAI : MonoBehaviour
     private void OnDrawGizmosSelected() //draws the hitbox for our attack
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPos.position, hitboxRadius);
+        Gizmos.DrawWireSphere(attackPos.position, hitboxRadius); //weapon attack hitbox
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(attackPos.position, enemyAttackRange); //attack range hitbox
     }
 }
