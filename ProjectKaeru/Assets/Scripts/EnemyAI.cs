@@ -11,7 +11,6 @@ public class EnemyAI : MonoBehaviour
     public Animator animator; //animator to control the enemy's animations
 
     public float enemyDetectionRange = 6.5f; //Distance before this enemy starts pathfinding to the player
-    public float enemyAttackRange = 1f; //Distance between the player and the enemy where the enemy executes an attack
 
     public Transform groundDetector; //Helps with ground detection (don't walk off the side of a cliff)
     public float distanceToGround = 2f; //Distance of our ray to the ground. Default 2
@@ -26,9 +25,11 @@ public class EnemyAI : MonoBehaviour
     public float nextWaypointDistance = 1f;
 
     //enemy's attack
+    public float enemyAttackRange = 1f; //Distance between the player and the enemy where the enemy executes an attack
     private float attackCooldownTracker; //Tracks the cooldown of when we can attack again
     public float attackCooldown; //The set cooldown of when this enemy can attack again
     public Transform attackPos; //child of the enemy which is the base of their hitbox
+    public Transform attackDetect; //child of the enemy which is the base of their attack detection hitbox
     public float hitboxRadius; //radius of the hitbox
 
     public int damage; //How much damage an attack by this enemy does
@@ -83,10 +84,11 @@ public class EnemyAI : MonoBehaviour
     //Work on animation transitions
     //Combine this script with the basic enemy script
     //Figure out how Mac's attack script works. His hitboxes might actually last for more than a frame.
+    //Improve enemy attack range to maybe be a overlapSquare or something like that which uses the attackPos gamechild
 
     {
         //Debug.Log(Math.Abs(Vector3.Distance(target.transform.position, transform.position)));
-        Collider2D rangeHitbox = Physics2D.OverlapCircle(transform.position, enemyAttackRange, LayerMask.GetMask("Player"));
+        Collider2D rangeHitbox = Physics2D.OverlapBox(attackDetect.position, new Vector2(enemyAttackRange, 1.55f), 0, LayerMask.GetMask("Player"));
         if (rangeHitbox != null) //If in attack range, try to attack the player
         {
             //Maybe set canIMove to false during this time
@@ -239,6 +241,6 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(attackPos.position, hitboxRadius); //weapon attack hitbox
 
         Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(attackPos.position, enemyAttackRange); //attack range hitbox
+        Gizmos.DrawWireCube(attackDetect.position, new Vector3(enemyAttackRange, 1.55f, 1)); //attack range hitbox
     }
 }
