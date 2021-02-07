@@ -16,9 +16,9 @@ public class LevelLoader : MonoBehaviour
     }
 
 
-    public void LoadNextLevel(string toScene, int respawnPoint)
+    public void LoadNextLevel(string toScene, string entrance)
     {
-        levelManager.respawnPoint = levelManager.respawnPoints.transform.GetChild(respawnPoint);
+        levelManager.SetEntrance(entrance);
         StartCoroutine(LoadLevel(toScene));
     }
 

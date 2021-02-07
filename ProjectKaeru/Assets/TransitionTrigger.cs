@@ -5,7 +5,7 @@ using UnityEngine;
 public class TransitionTrigger : MonoBehaviour
 {
 	private LevelLoader levelLoad;
-	public int myPoint = 0;
+	public string entryPoint = "";
 
 	private void Start()
 	{
@@ -16,7 +16,7 @@ public class TransitionTrigger : MonoBehaviour
 	{
 		if (other.gameObject.layer == 8)
 		{
-			levelLoad.LoadNextLevel(this.name, myPoint);
+			levelLoad.LoadNextLevel(this.name, entryPoint);
 		}
 	}
 }
