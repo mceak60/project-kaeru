@@ -49,4 +49,10 @@ public class Health : MonoBehaviour
             GetComponent<PlayerDeath>().Die();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Enemy"))
+            TakeDamage(1);
+    }
 }

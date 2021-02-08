@@ -10,6 +10,7 @@ TagManager:
   - DashPowerup
   - WallClingPowerup
   - GrapplingHookPowerup
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 55883981
+    locked: 0
+  - name: Background 2
+    uniqueID: 1080728007
     locked: 0
   - name: Default
     uniqueID: 0
