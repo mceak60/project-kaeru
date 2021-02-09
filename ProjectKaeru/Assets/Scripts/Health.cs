@@ -53,6 +53,12 @@ public class Health : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Enemy"))
+        {
             TakeDamage(1);
+
+            Rigidbody2D playerRB = GetComponent<Rigidbody2D>();
+            Vector3 moveDirection = playerRB.transform.position - col.transform.position;
+            playerRB.AddForce(moveDirection.normalized * 1000f);
+        }
     }
 }
