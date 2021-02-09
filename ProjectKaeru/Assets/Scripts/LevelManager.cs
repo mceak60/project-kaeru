@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject player;
     private Transform playerTransform;
+    private Health playerHealth;
 
     static public string entryPoint = "spawn";
 
@@ -26,6 +27,7 @@ public class LevelManager : MonoBehaviour
 
         player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
         playerTransform = player.GetComponent<Transform>();
+        playerHealth = player.GetComponent<Health>();
 
         CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
         vcam.Follow = playerTransform;
@@ -36,6 +38,7 @@ public class LevelManager : MonoBehaviour
     public void Respawn()
     {
         playerTransform.position = respawnPoint.position;
+        playerHealth.health = playerHealth.numHearts;
     }
 
     public void SetEntrance(string entrance)
