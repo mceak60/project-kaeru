@@ -11,6 +11,8 @@ TagManager:
   - WallClingPowerup
   - GrapplingHookPowerup
   - Enemy
+  - SceneTransition
+  - ResetPowerUp
   layers:
   - Default
   - TransparentFX
