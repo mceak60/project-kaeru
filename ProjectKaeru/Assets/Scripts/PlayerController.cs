@@ -132,9 +132,9 @@ public class PlayerController : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.LeftShift) && !attacking)
                     {
-                        dashing = true;
                         nextDashTime = (Time.time + 1f / dashRate) + dashTime;
-                        animator.SetBool("IsJumping", false);
+						dashing = true;
+						animator.SetBool("IsJumping", false);
                     }
                 }
             }
@@ -394,4 +394,6 @@ public class PlayerController : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+
+	
 }
