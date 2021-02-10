@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
 	public float walljumpVertical = 50f; // How much vertical force is applied to the player when they walljump
 	public float walljumpHorizontal = 50f; // How much horizontal force is applied to the player when they walljump
 
-	public bool busy = false;
+	public bool grapple = false;
+    public bool knockback = false;
 	public bool wallJump = false;
 
     public ItemManager itemManager; // Reference to ItemManager script so we can access the 'has___Powerup' properties
@@ -96,7 +97,7 @@ public class PlayerController : MonoBehaviour
 		 * Most of the code in this part is just checking for the player's input and setting the corresponding value accordingly if that action can be taken
 		 */
 
-		if (!busy)
+		if (!grapple && !knockback)
 		{
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
@@ -200,7 +201,7 @@ public class PlayerController : MonoBehaviour
 			jump = true;
 		}
 		//Applies most of the physics to the player
-		if (!isWalljumping && !busy)
+		if (!isWalljumping && !grapple && !knockback)
 		{
 			Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
 		}
@@ -395,5 +396,4 @@ public class PlayerController : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	
 }
