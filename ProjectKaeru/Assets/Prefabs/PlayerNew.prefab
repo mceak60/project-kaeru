@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 7594635668924762217}
   m_Layer: 8
   m_Name: PlayerNew
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,7 +281,8 @@ MonoBehaviour:
   dashRate: 3
   walljumpVertical: 14
   walljumpHorizontal: 15
-  busy: 0
+  grapple: 0
+  knockback: 0
   wallJump: 0
   itemManager: {fileID: 9181880674094745462}
   m_WhatIsWall:
@@ -468,6 +469,12 @@ MonoBehaviour:
   - {fileID: 3762940622902723943}
   fullHeart: {fileID: 21300000, guid: bd7bb5c4437567d40a875d4b42a93158, type: 3}
   emptyHeart: {fileID: 21300000, guid: 0389b6ca8cc6fa141a00475417be271c, type: 3}
+  controller: {fileID: 8273311361126527353}
+  startIFrames: 0.6
+  startKnockbackTime: 0.15
+  knockbackAmount: 13
+  playerSprite: {fileID: 895446792800387167}
+  startFlashTime: 0.1
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class GrappleHook : MonoBehaviour
     public Rigidbody2D rb; // Ridgidbody of the player
 
     private Collider2D lastClosest; // The previous grappleable point that the player was closest to
-    public PlayerController controller; // The PlayerController script. Used only to change the "busy" boolean value to prevent player movement while grappling
+    public PlayerController controller; // The PlayerController script. Used only to change the "grapple" boolean value to prevent player movement while grappling
 
     private bool grapple = false; // Detects the first time the player clicks wto grapple
     private bool wasGrapple = false; // Whether or not the player can grapple again
@@ -50,14 +50,14 @@ public class GrappleHook : MonoBehaviour
         }
 
         //If the player's control is disabled then count down until its reenabled
-        if (controller.busy && myFlingTime > 0)
+        if (controller.grapple && myFlingTime > 0)
         {
             myFlingTime -= Time.deltaTime;
         }
         // Re enable player control
         else
         {
-            controller.busy = false;
+            controller.grapple = false;
             wasGrapple = false;
             myFlingTime = 0;
 
@@ -122,7 +122,7 @@ public class GrappleHook : MonoBehaviour
                     dis = angle.magnitude;
                     angle.Normalize();
 
-                    controller.busy = true;
+                    controller.grapple = true;
                     rb.gravityScale = 0f;
 
                     grapple = false;
@@ -159,7 +159,7 @@ public class GrappleHook : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
         {
-            controller.busy = true;
+            controller.grapple = true;
             myFlingTime = flingTime;
             rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
             rb.velocity = angle * flingVelo;
@@ -169,7 +169,7 @@ public class GrappleHook : MonoBehaviour
         }
         else if (!col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
         {
-            controller.busy = false;
+            controller.grapple = false;
             rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
             wasGrapple = false;
             grappling = false;
@@ -192,10 +192,13 @@ public class GrappleHook : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        controller.busy = false;
-        rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
-        wasGrapple = false;
-        grappling = false;
-        lr.positionCount = 0;
+        if(grappling)
+        {
+            controller.grapple = false;
+            rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
+            wasGrapple = false;
+            grappling = false;
+            lr.positionCount = 0;
+        }
     }
 }
