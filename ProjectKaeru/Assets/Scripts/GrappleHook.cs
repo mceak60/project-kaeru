@@ -37,11 +37,13 @@ public class GrappleHook : MonoBehaviour
 
     public ItemManager itemManager; // Reference to ItemManager script
 
+    public bool preventGrapple = false;
+
 
     void Update()
     {
         //If the player clicks and isn't currenlty grappling then try to grapple
-        if(itemManager.hasGrapplingHookPowerup)
+        if(itemManager.hasGrapplingHookPowerup && !preventGrapple)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling && !wasGrapple)
             {
@@ -190,9 +192,21 @@ public class GrappleHook : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
         if(grappling)
+        {
+            controller.grapple = false;
+            rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
+            wasGrapple = false;
+            grappling = false;
+            lr.positionCount = 0;
+        }
+    }
+
+    public void cancelGrapple()
+    {
+        if (grappling)
         {
             controller.grapple = false;
             rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
