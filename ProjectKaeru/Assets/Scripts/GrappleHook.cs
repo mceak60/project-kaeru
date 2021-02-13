@@ -120,7 +120,8 @@ public class GrappleHook : MonoBehaviour
                 //This statement is only called the first time that the player grapples and sets the direction the player will move and removes control from the player for a bit
                 if (grapple)
                 {
-                    angle = new Vector2(closestPoint.gameObject.transform.position.x - gameObject.transform.position.x, closestPoint.gameObject.transform.position.y - gameObject.transform.position.y);
+                    Transform point = closestPoint.gameObject.transform.Find("GrapplePoint");
+                    angle = new Vector2(point.position.x - gameObject.transform.position.x, point.position.y - gameObject.transform.position.y);
                     dis = angle.magnitude;
                     angle.Normalize();
 
@@ -132,7 +133,7 @@ public class GrappleHook : MonoBehaviour
 
                     lr.positionCount = 2;
                     lr.SetPosition(0, emissionPoint.transform.position);
-                    lr.SetPosition(1, closestPoint.gameObject.transform.position);
+                    lr.SetPosition(1, point.position);
                 }
 
                 //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
