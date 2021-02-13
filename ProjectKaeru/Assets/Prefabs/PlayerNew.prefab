@@ -248,8 +248,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 8273311361126527353}
+  grapple: {fileID: 2276758851224923948}
   anim: {fileID: 895446792800387142}
-  respawnTime: 0.5
+  dieTime: 0.5
+  respawnTime: 0.6
 --- !u!114 &8273311361126527353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +341,7 @@ MonoBehaviour:
   lr: {fileID: 4479447833693287716}
   emissionPoint: {fileID: 2093460603887534569}
   itemManager: {fileID: 9181880674094745462}
+  preventGrapple: 0
 --- !u!120 &4479447833693287716
 LineRenderer:
   m_ObjectHideFlags: 0

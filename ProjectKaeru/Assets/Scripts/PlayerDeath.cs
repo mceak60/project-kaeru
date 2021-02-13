@@ -11,6 +11,7 @@ public class PlayerDeath : MonoBehaviour
 {
     private bool isDead = false;
     public PlayerController playerController;
+    public GrappleHook grapple;
     public Animator anim;
     public float dieTime = 0.5f;
     public float respawnTime = 0.7f;
@@ -54,6 +55,8 @@ public class PlayerDeath : MonoBehaviour
         
         //Stop movement
         playerController.dying = true;
+        grapple.preventGrapple = true;
+        grapple.cancelGrapple();
         //Play anim
         anim.SetBool("IsDying", true);
         //Wait for anim to finish
@@ -67,6 +70,7 @@ public class PlayerDeath : MonoBehaviour
         anim.SetBool("IsRespawning", false);
         //Allow player to player the game again
         playerController.dying = false;
+        grapple.preventGrapple = false;
         isDead = false;
     }
 }
