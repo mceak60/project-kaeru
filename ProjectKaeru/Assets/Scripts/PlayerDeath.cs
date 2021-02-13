@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerDeath : MonoBehaviour
 {
     private bool isDead = false;
+    public PlayerController playerController;
+    public Animator anim;
+    //public Animator transition;
+    public float respawnTime = 0.5f;
 
     //Nick commented out this code because he thought it might have caused the shadow clone glitch but I don't think thats the case and we may need to update it and use it sometime -Bren
     private void OnCollisionEnter2D(Collision2D col)
@@ -37,8 +41,25 @@ public class PlayerDeath : MonoBehaviour
 
     public void Die()
     {
+        StartCoroutine(DieAnim());
+    }
+
+    IEnumerator DieAnim()
+    {
         isDead = true;
+        //Make invincible
+        //Stop movement
+        playerController.dying = true;
+        //Play anim
+        anim.SetBool("IsDying", true);
+        //transition.SetTrigger("die");
+        //Play transistion
+        yield return new WaitForSeconds(respawnTime);
+        //respawn
         LevelManager.instance.Respawn();
+        anim.SetBool("IsDying", false);
+        //transition.SetTrigger("respawn");
+        playerController.dying = false;
         isDead = false;
     }
 }

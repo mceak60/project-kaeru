@@ -246,6 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89773134445062e4d9eea4b999bca1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 8273311361126527353}
+  anim: {fileID: 895446792800387142}
+  respawnTime: 0.5
 --- !u!114 &8273311361126527353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +287,7 @@ MonoBehaviour:
   grapple: 0
   knockback: 0
   wallJump: 0
+  dying: 0
   itemManager: {fileID: 9181880674094745462}
   m_WhatIsWall:
     serializedVersion: 2
@@ -306,7 +310,6 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls: []
-  levelLoad: {fileID: 6257413437657477621, guid: 53d4578e17e5b8147a08548125dc0e61, type: 3}
 --- !u!114 &2276758851224923948
 MonoBehaviour:
   m_ObjectHideFlags: 0
