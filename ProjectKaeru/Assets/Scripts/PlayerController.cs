@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
 	public bool grapple = false;
     public bool knockback = false;
 	public bool wallJump = false;
+	public bool dying = false;
 
     public ItemManager itemManager; // Reference to ItemManager script so we can access the 'has___Powerup' properties
 
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
 		 * Most of the code in this part is just checking for the player's input and setting the corresponding value accordingly if that action can be taken
 		 */
 
-		if (!grapple && !knockback)
+		if (!grapple && !knockback & !dying)
 		{
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
@@ -201,13 +202,18 @@ public class PlayerController : MonoBehaviour
 			jump = true;
 		}
 		//Applies most of the physics to the player
-		if (!isWalljumping && !grapple && !knockback)
+		if (!isWalljumping && !grapple && !knockback & !dying)
 		{
 			Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, attacking, dashing, isGrabbing);
 		}
 
+		if (dying)
+		{
+			m_Rigidbody2D.velocity = Vector2.zero;
+		}
+
 		//We set jump to false right after move so we don't continue applying the upward force
-			jump = false;
+		jump = false;
 
 		//Updates the time keeping values for dashing if that applies
 		if (dashing)
