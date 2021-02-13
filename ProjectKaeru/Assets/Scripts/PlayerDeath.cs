@@ -52,13 +52,14 @@ public class PlayerDeath : MonoBehaviour
         playerController.dying = true;
         //Play anim
         anim.SetBool("IsDying", true);
-        //transition.SetTrigger("die");
         //Play transistion
         yield return new WaitForSeconds(respawnTime);
         //respawn
         LevelManager.instance.Respawn();
         anim.SetBool("IsDying", false);
-        //transition.SetTrigger("respawn");
+        anim.SetBool("IsRespawning", true);
+        yield return new WaitForSeconds(0.7f);
+        anim.SetBool("IsRespawning", false);
         playerController.dying = false;
         isDead = false;
     }
