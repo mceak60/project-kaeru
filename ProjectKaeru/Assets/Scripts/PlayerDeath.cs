@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/*
+ * I mean, its rough code to respwen the player. It works well enough
+ * The player can grapple while dead tho oop -Brennan
+ */
 public class PlayerDeath : MonoBehaviour
 {
     private bool isDead = false;
