@@ -45,7 +45,7 @@ public class GrappleHook : MonoBehaviour
         //If the player clicks and isn't currenlty grappling then try to grapple
         if(itemManager.hasGrapplingHookPowerup && !preventGrapple)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !grappling && !wasGrapple)
+            if (Input.GetKeyDown(KeyCode.Mouse1) && !grappling && !wasGrapple)
             {
                 grapple = true;
             }

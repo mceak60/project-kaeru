@@ -46,21 +46,21 @@ public class ItemManager : MonoBehaviour
         {
             Destroy(col.gameObject);
             hasDashPowerup = true;
-            PlayerPrefs.SetInt("dash", 1);
+            PlayerPrefs.SetInt("dash", 0);
         }
         // Handles collection of wall cling powerup
         else if (col.gameObject.CompareTag("WallClingPowerup"))
         {
             Destroy(col.gameObject);
             hasWallClingPowerup = true;
-            PlayerPrefs.SetInt("wallcling", 1);
+            PlayerPrefs.SetInt("wallcling", 0);
         }
         // Handles collection of grappling hook powerup
         else if (col.gameObject.CompareTag("GrapplingHookPowerup"))
         {
             Destroy(col.gameObject);
             hasGrapplingHookPowerup = true;
-            PlayerPrefs.SetInt("grapple", 1);
+            PlayerPrefs.SetInt("grapple", 0);
         }
         else if (col.gameObject.CompareTag("ResetPowerUp"))
         {
