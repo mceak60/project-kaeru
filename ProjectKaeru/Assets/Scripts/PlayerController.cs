@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
 	private bool isWalljumping = false;
 
+	private bool heavy;
+
 	private void Start()
 	{
 		dashTime = startDashTime;
@@ -93,11 +95,10 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
+		//Debug.Log(m_Grounded);
 		/*
 		 * Most of the code in this part is just checking for the player's input and setting the corresponding value accordingly if that action can be taken
 		 */
-
 		if (!grapple && !knockback && !dying)
 		{
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -155,6 +156,7 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
                     {
                         isGrabbing = true;
+						heavy = false;
                     }
                 }
                 if (isGrabbing == true)
@@ -163,12 +165,9 @@ public class PlayerController : MonoBehaviour
                     //I though that this instantly calling the move method when we get here would fix the inconsistent walljumps I've been having but the code gets here and calls the move method everytime so idk -Bren
                     if (Input.GetButtonDown("Jump"))
                     {
-                        //isWalljumping = true;
                         isGrabbing = false;
-                        //jump = true;
                         wallJump = true;
                         animator.SetBool("IsJumping", true);
-                        //Move(horizontalMove * Time.fixedDeltaTime, false, true, false, false, true);
                     }
 
                 }
@@ -189,12 +188,6 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	//I'm pretty sure this is a relic of when the two scripts were seperate and I can move this code into where I update m_IsGrounded but it works and I'm too lazy deal with the possibility that it doesn't work -Bren
-	public void OnLanding()
-	{
-		animator.SetBool("IsJumping", false);
-	}
-
 	private void FixedUpdate()
 	{
 		if (wallJump)
@@ -213,7 +206,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//We set jump to false right after move so we don't continue applying the upward force
-			jump = false;
+		jump = false;
 
 		//Updates the time keeping values for dashing if that applies
 		if (dashing)
@@ -242,7 +235,11 @@ public class PlayerController : MonoBehaviour
 			{
 				m_Grounded = true;
 				if (!wasGrounded)
-					OnLandEvent.Invoke();
+				{
+					animator.SetBool("IsJumping", false);
+					if (heavy)
+						heavy = false;
+				}
 			}
 		}
 		if (colliders.Length == 0)
@@ -254,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump, bool attack, bool dash, bool grab)
 	{
-		// this statements prevents the player from moving during the first part of the walljump, its how a lott of games do it
+		// this statements prevents the player from moving during the first part of the walljump, its how a lot of games do it
 
 		/*
 		* This applies all the physics of the walljump
@@ -377,7 +374,7 @@ public class PlayerController : MonoBehaviour
 					m_Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
 				}
 				//If the player just jumped but let go of the jump key we increase the gravity applied to them allowing them to control their jump height better
-				else if (m_Rigidbody2D.velocity.y > 0 && !Input.GetButton("Jump"))
+				else if (m_Rigidbody2D.velocity.y > 0 && (!Input.GetButton("Jump") || heavy))
 				{
 					m_Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
 				}
@@ -400,6 +397,11 @@ public class PlayerController : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	public void makeHeavy()
+	{
+		heavy = true;
 	}
 
 }

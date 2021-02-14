@@ -57,7 +57,7 @@ public class GrappleHook : MonoBehaviour
             myFlingTime -= Time.deltaTime;
         }
         // Re enable player control
-        else
+        else if(wasGrapple)
         {
             controller.grapple = false;
             wasGrapple = false;
@@ -134,6 +134,8 @@ public class GrappleHook : MonoBehaviour
                     lr.positionCount = 2;
                     lr.SetPosition(0, emissionPoint.transform.position);
                     lr.SetPosition(1, point.position);
+
+                    controller.makeHeavy();
                 }
 
                 //If the player hasn't collided with the target we move them towards it at a speed of grappleVelo
@@ -170,13 +172,15 @@ public class GrappleHook : MonoBehaviour
             grappling = false;
             lr.positionCount = 0;
         }
-        else if (!col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
+
+        //This code was used to disable a grapple if the player falls into a death box but I make that call somewhere else now
+        /*else if (!col.gameObject.CompareTag("Grappleable") && grappling && !wasGrapple)
         {
             controller.grapple = false;
             rb.gravityScale = controller.gravityStore; //This sets the gravity to the scene gravity and not the player's specific fall gravity that kicks in after flingTime ends
             wasGrapple = false;
             grappling = false;
-        }
+        }*/
 
         
     }
@@ -193,6 +197,7 @@ public class GrappleHook : MonoBehaviour
         }
     }
 
+    // Cancels Grapple if you grapple into something
     private void OnCollisionEnter2D(Collision2D col)
     {
         if(grappling)
@@ -205,6 +210,7 @@ public class GrappleHook : MonoBehaviour
         }
     }
 
+    // Cancels grapple if you die
     public void cancelGrapple()
     {
         if (grappling)
