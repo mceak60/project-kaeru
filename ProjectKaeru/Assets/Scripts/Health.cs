@@ -28,7 +28,7 @@ public class Health : MonoBehaviour
     private float flashTime; // Used for the flash clock
     private Color defaultColor; // Should be white, or Color(1,1,1,1)
 
-    private Collision2D lastCollision;
+    private Collider2D lastCollision;
 
     private void Start()
     {
@@ -54,12 +54,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("trigger1");
         if (!invincible)
         {
             if (col.gameObject.CompareTag("Enemy"))
             {
+                Debug.Log("trigger");
                 lastCollision = col;
                 invincible = true;
                 knockback = true;

@@ -79,7 +79,9 @@ public class PlayerController : MonoBehaviour
 	{
 		dashTime = startDashTime;
 		gravityStore = m_Rigidbody2D.gravityScale;
-	}
+
+        Physics2D.IgnoreLayerCollision(8,14);
+    }
 
 	private void Awake()
 	{
