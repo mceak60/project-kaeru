@@ -54,14 +54,31 @@ public class Health : MonoBehaviour
         }
     }
 
+    // If the player collides with the enemy's hitbox, apply damage and knockback
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("trigger1");
         if (!invincible)
         {
             if (col.gameObject.CompareTag("Enemy"))
             {
-                Debug.Log("trigger");
+                lastCollision = col;
+                invincible = true;
+                knockback = true;
+                controller.knockback = true;
+                TakeDamage(1);
+                Debug.Log("Invincible");
+                playerSprite.color = Color.gray;
+            }
+        }
+    }
+
+    // If the player stays in the enemy's hitbox after their invincibility runs out, reapply damage and knockback
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (!invincible)
+        {
+            if (col.gameObject.CompareTag("Enemy"))
+            {
                 lastCollision = col;
                 invincible = true;
                 knockback = true;

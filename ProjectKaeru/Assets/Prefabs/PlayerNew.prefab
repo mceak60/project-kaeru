@@ -478,7 +478,7 @@ MonoBehaviour:
   fullHeart: {fileID: 21300000, guid: bd7bb5c4437567d40a875d4b42a93158, type: 3}
   emptyHeart: {fileID: 21300000, guid: 0389b6ca8cc6fa141a00475417be271c, type: 3}
   controller: {fileID: 8273311361126527353}
-  startIFrames: 0.6
+  startIFrames: 0.7
   startKnockbackTime: 0.15
   knockbackAmount: 13
   playerSprite: {fileID: 895446792800387167}
