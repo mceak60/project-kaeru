@@ -110,11 +110,11 @@ public class PlayerController : MonoBehaviour
 				jump = true;
 				animator.SetBool("IsJumping", true);
 			}
-			if (Input.GetButtonDown("Crouch"))
+			if (Input.GetButtonDown("Crouch") && !jump)
 			{
 				crouch = true;
 			}
-			else if (Input.GetButtonUp("Crouch"))
+			else if (Input.GetButtonUp("Crouch") || jump)
 			{
 				crouch = false;
 			}
@@ -404,6 +404,20 @@ public class PlayerController : MonoBehaviour
 	public void makeHeavy()
 	{
 		heavy = true;
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag("MovingPlatform"))
+		{
+			transform.parent = other.gameObject.transform;
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D other)
+	{ 
+		if(other.gameObject.CompareTag("MovingPlatform"))
+			transform.parent = null;
 	}
 
 }
