@@ -41,6 +41,12 @@ public class LevelManager : MonoBehaviour
         playerHealth.health = playerHealth.numHearts;
     }
 
+    public void Reset()
+    {
+        playerTransform.position = respawnPoint.position;
+
+    }
+
     public void SetEntrance(string entrance)
     {
         entryPoint = entrance;

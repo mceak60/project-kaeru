@@ -29,7 +29,7 @@ public class PlayerDeath : MonoBehaviour
         {
             if (col.gameObject.CompareTag("Death"))
             {
-                Die();
+                Reset();
             }
         }
     }
@@ -41,9 +41,45 @@ public class PlayerDeath : MonoBehaviour
         {
             if (col.gameObject.CompareTag("Death"))
             {
-                Die();
+                Reset();
             }
         }
+    }
+
+    public void Reset()
+    {
+        StartCoroutine(ResetAnim());
+    }
+
+    IEnumerator ResetAnim()
+    {
+        isDead = true;
+
+        //Take damage
+        health.TakeDamage(1);
+
+        //Make invincible
+        health.MakeInvincible();
+
+        //Stop movement
+        playerController.dying = true;
+        grapple.preventGrapple = true;
+        grapple.cancelGrapple();
+        //Play anim
+        anim.SetBool("IsDying", true);
+        //Wait for anim to finish
+        yield return new WaitForSeconds(dieTime);
+        //respawn
+        LevelManager.instance.Reset();
+        anim.SetBool("IsDying", false);
+        //play respawn anim
+        anim.SetBool("IsRespawning", true);
+        yield return new WaitForSeconds(respawnTime);
+        anim.SetBool("IsRespawning", false);
+        //Allow player to player the game again
+        playerController.dying = false;
+        grapple.preventGrapple = false;
+        isDead = false;
     }
 
     //Yeah we don't need this method
@@ -56,12 +92,6 @@ public class PlayerDeath : MonoBehaviour
     IEnumerator DieAnim()
     {
         isDead = true;
-
-        //Take damage
-        health.TakeDamage(1);
-
-        //Make invincible
-        health.MakeInvincible();
 
         //Stop movement
         playerController.dying = true;
