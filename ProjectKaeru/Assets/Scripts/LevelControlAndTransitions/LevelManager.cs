@@ -41,12 +41,14 @@ public class LevelManager : MonoBehaviour
         playerHealth.health = playerHealth.numHearts;
     }
 
+    // Teleports the player to a safe space after falling into a pit
     public void Reset()
     {
         playerTransform.position = respawnPoint.position;
 
     }
 
+    // Sets the value the player will start in whenthe scene loads. Used for transitioning between scenes
     public void SetEntrance(string entrance)
     {
         entryPoint = entrance;
