@@ -15,6 +15,12 @@ public class PlayerDeath : MonoBehaviour
     public Animator anim;
     public float dieTime = 0.5f;
     public float respawnTime = 0.7f;
+    private Health health;
+
+    private void Start()
+    {
+        health = GetComponent<Health>();
+    }
 
     // Respawn the player when they make contact with an object with the death tag
     private void OnCollisionEnter2D(Collision2D col)
@@ -50,9 +56,13 @@ public class PlayerDeath : MonoBehaviour
     IEnumerator DieAnim()
     {
         isDead = true;
+
+        //Take damage
+        health.TakeDamage(1);
+
         //Make invincible
-        //I don't know how to do this -Brennan
-        
+        health.MakeInvincible();
+
         //Stop movement
         playerController.dying = true;
         grapple.preventGrapple = true;
