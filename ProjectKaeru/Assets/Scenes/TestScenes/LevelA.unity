@@ -472,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640708137}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.198631, y: -0.95476234, z: -10}
+  m_LocalPosition: {x: -28.372772, y: -0.95899045, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1379491061}
@@ -7988,7 +7988,7 @@ GameObject:
   - component: {fileID: 1893842714}
   - component: {fileID: 1893842715}
   m_Layer: 0
-  m_Name: RespawnPoint
+  m_Name: RespawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
