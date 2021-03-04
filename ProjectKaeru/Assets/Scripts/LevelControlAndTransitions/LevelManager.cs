@@ -18,13 +18,14 @@ public class LevelManager : MonoBehaviour
     private Health playerHealth;
 
     static public string entryPoint = "spawn"; // The default entry point when the player first loads in is coded as the one called "spawn" currently
-    static public string respawnScene = "default"; // The default respawn point is called default currently
+    static public string respawnScene = "LevelA"; // The default respawn point is called default currently
     private LevelLoader levelLoader; // Yeah you need a level loader in the scene for this code to work now
 
     //When the game starts, create a new player and have the camera follow it
     private void Awake()
     {
         instance = this;
+        resetPoints = GameObject.Find("RespawnPoints");
         resetPoint = instance.resetPoints.transform.Find(LevelManager.entryPoint);
 
         player = Instantiate(playerPrefab, resetPoint.position, Quaternion.identity);

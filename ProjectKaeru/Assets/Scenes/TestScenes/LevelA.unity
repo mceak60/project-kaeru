@@ -7264,8 +7264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2850e2034100a6e41899a817bad16a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 247148227}
-  respawnPoints: {fileID: 1893842713}
+  resetPoint: {fileID: 0}
+  resetPoints: {fileID: 1893842713}
   playerPrefab: {fileID: 895446792800387166, guid: c00b61b2db3154a429bb090fe105b9c7, type: 3}
   playerCamera: {fileID: 1420198694}
 --- !u!4 &1379491061

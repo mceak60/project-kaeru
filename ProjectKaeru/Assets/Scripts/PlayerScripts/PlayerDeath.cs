@@ -48,18 +48,17 @@ public class PlayerDeath : MonoBehaviour
 
     public void Reset()
     {
-        StartCoroutine(ResetAnim());
+        //Take damage
+        health.TakeDamage(1);
+        //Make invincible
+        health.MakeInvincible();
+        if(health.health > 0)
+            StartCoroutine(ResetAnim());
     }
 
     IEnumerator ResetAnim()
     {
         isDead = true;
-
-        //Take damage
-        health.TakeDamage(1);
-
-        //Make invincible
-        health.MakeInvincible();
 
         //Stop movement
         playerController.dying = true;
@@ -98,19 +97,10 @@ public class PlayerDeath : MonoBehaviour
         grapple.preventGrapple = true;
         grapple.cancelGrapple();
         //Play anim
-        anim.SetBool("IsDying", true);
+        //anim.SetBool("IsDying", true);
         //Wait for anim to finish
-        yield return new WaitForSeconds(dieTime);
+        yield return new WaitForSeconds(dieTime-0.25f);
         //respawn
         LevelManager.instance.Respawn();
-        anim.SetBool("IsDying", false);
-        //play respawn anim
-        anim.SetBool("IsRespawning", true);
-        yield return new WaitForSeconds(respawnTime);
-        anim.SetBool("IsRespawning", false);
-        //Allow player to player the game again
-        playerController.dying = false;
-        grapple.preventGrapple = false;
-        isDead = false;
     }
 }
