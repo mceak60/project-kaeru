@@ -247,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1528953107655628097}
   m_Layer: 0
-  m_Name: spawn
+  m_Name: devSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,8 +396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2850e2034100a6e41899a817bad16a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 1528953107655628097}
-  respawnPoints: {fileID: 0}
+  resetPoint: {fileID: 0}
+  resetPoints: {fileID: 1528953108297778331}
   playerPrefab: {fileID: 895446792800387166, guid: c00b61b2db3154a429bb090fe105b9c7, type: 3}
   playerCamera: {fileID: 1528953108897904804}
 --- !u!1 &1528953108897904804

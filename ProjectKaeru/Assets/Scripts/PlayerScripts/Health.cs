@@ -165,4 +165,14 @@ public class Health : MonoBehaviour
             }
         }
     }
+
+    public void MakeInvincible()
+    {
+        invincible = true;
+    }
+
+    public bool GetInvisible()
+    {
+        return invincible;
+    }
 }

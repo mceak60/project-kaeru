@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//This script is the same as the TransitionTrigger script but you have to press the "Enter" key to change scenes
 public class DoorTransition : MonoBehaviour
 {
 	private LevelLoader levelLoad;
