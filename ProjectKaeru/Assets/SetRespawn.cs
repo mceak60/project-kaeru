@@ -8,6 +8,7 @@ public class SetRespawn : MonoBehaviour
     private bool interactable = false;
     private LevelManager levelManager;
     private Scene scene;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class SetRespawn : MonoBehaviour
     {
         if (interactable && Input.GetButtonDown("Enter"))
         {
+            anim.SetTrigger("SetSpawn");
             LevelManager.respawnScene = scene.name;
         }
     }
@@ -28,10 +30,12 @@ public class SetRespawn : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         interactable = true;
+        anim.SetBool("Active", true);
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
         interactable = false;
+        anim.SetBool("Active", false);
     }
 }
