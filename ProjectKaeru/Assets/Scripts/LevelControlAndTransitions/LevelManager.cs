@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -18,8 +19,8 @@ public class LevelManager : MonoBehaviour
     private Health playerHealth;
 
     static public string entryPoint = "devSpawn"; // The default entry point when the player first loads in is coded as the one called "spawn" currently
-    static public string respawnScene = "LevelA"; // The default respawn point is called default currently
-    private LevelLoader levelLoader; // Yeah you need a level loader in the scene for this code to work now
+    static public string respawnScene; // The default respawn scene wiill be whichever scene is open when the game starts up
+    private LevelLoader levelLoader; // The level loader is required to reload the scene when you die
 
     //When the game starts, create a new player and have the camera follow it
     private void Awake()
@@ -27,7 +28,6 @@ public class LevelManager : MonoBehaviour
         instance = this;
         resetPoints = GameObject.Find("RespawnPoints");
         resetPoint = instance.resetPoints.transform.Find(LevelManager.entryPoint);
-
         player = Instantiate(playerPrefab, resetPoint.position, Quaternion.identity);
         playerTransform = player.GetComponent<Transform>();
         playerHealth = player.GetComponent<Health>();
@@ -36,6 +36,7 @@ public class LevelManager : MonoBehaviour
         vcam.Follow = playerTransform;
 
         levelLoader = Object.FindObjectOfType<LevelLoader>();
+        LevelManager.respawnScene = SceneManager.GetActiveScene().name; // Sets default respawn scene to the whichever scene is open when the game is started
     }
 
 
