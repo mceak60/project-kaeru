@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
     private Transform playerTransform;
     private Health playerHealth;
 
-    static public string entryPoint = "spawn"; // The default entry point when the player first loads in is coded as the one called "spawn" currently
+    static public string entryPoint = "devSpawn"; // The default entry point when the player first loads in is coded as the one called "spawn" currently
     static public string respawnScene = "LevelA"; // The default respawn point is called default currently
     private LevelLoader levelLoader; // Yeah you need a level loader in the scene for this code to work now
 
