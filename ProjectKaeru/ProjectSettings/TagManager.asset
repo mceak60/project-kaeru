@@ -55,6 +55,9 @@ TagManager:
   - name: Background 2
     uniqueID: 1080728007
     locked: 0
+  - name: Lit
+    uniqueID: 2491472581
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
