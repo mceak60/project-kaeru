@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6988297000031577387
 RectTransform:
   m_ObjectHideFlags: 0
@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c61162d335ea8145b0f1594402c658a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toScene: 
   transition: {fileID: 6132621329235981328}
   transitionTime: 1
 --- !u!1 &4416356411819665828
