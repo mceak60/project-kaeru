@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 4479447833693287716}
   - component: {fileID: 9181880674094745462}
   - component: {fileID: 7594635668924762217}
+  - component: {fileID: 6369263019808550398}
   m_Layer: 8
   m_Name: PlayerNew
   m_TagString: Player
@@ -484,6 +485,21 @@ MonoBehaviour:
   knockbackAmount: 13
   playerSprite: {fileID: 895446792800387167}
   startFlashTime: 0.1
+--- !u!114 &6369263019808550398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895446792800387166}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7345608f6f3dc98479a304f5e19128df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 895446792800387142}
+  attackRate: 1
+  isAttacking: 0
 --- !u!1 &895446793271014312
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9788a09be83ce8541ae90dcd92693247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 895446792800387139}
 --- !u!61 &2111999213298757459
 BoxCollider2D:
   m_ObjectHideFlags: 0

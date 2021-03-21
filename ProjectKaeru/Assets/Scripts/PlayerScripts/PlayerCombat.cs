@@ -26,7 +26,7 @@ public class PlayerCombat : MonoBehaviour
             isAttacking = false;
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Attack();
+                //Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
                 isAttacking = true;
             }
@@ -35,7 +35,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    void Attack()
+    /*void Attack()
     {
  
         //Detect enemies
@@ -55,5 +55,5 @@ public class PlayerCombat : MonoBehaviour
         if (attackPoint == null)
             return;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
+    }*/
 }
