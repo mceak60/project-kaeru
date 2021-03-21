@@ -229,7 +229,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &193017194
+--- !u!43 &118261580
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1000,7 +1000,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: f662b12c5ed7c68468680d4b1bf8bb7f, type: 3}
   m_Color: {r: 0.5754717, g: 0.5321158, b: 0.019001435, a: 0.68235296}
   m_FlipX: 0
@@ -7275,8 +7275,8 @@ MonoBehaviour:
   - {x: 1.9593353, y: -0.67011166, z: 0}
   - {x: -1.9344635, y: -0.66389346, z: 0}
   m_ShapePathHash: 684589205
-  m_Mesh: {fileID: 193017194}
-  m_InstanceId: 18342
+  m_Mesh: {fileID: 118261580}
+  m_InstanceId: 19332
 --- !u!1001 &1237936276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10118,6 +10118,10 @@ PrefabInstance:
     - target: {fileID: 3033931717869490126, guid: 53d4578e17e5b8147a08548125dc0e61, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416356411819665828, guid: 53d4578e17e5b8147a08548125dc0e61, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7126270625818437002, guid: 53d4578e17e5b8147a08548125dc0e61, type: 3}
       propertyPath: m_RootOrder
