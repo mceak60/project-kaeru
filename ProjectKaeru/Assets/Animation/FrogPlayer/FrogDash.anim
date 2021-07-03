@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FrogFall
+  m_Name: FrogDash
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 185f6bdebff9fe1438be6431e77feeaf, type: 3}
+      value: {fileID: 21300000, guid: b90abc3d9cbc98844bc7fe9f3f75aecc, type: 3}
     - time: 0.125
-      value: {fileID: 21300000, guid: d42564a265f83a94f98d109e5ec51b6d, type: 3}
+      value: {fileID: 21300000, guid: 6936376505919b3408dfd5743ef64ce8, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,8 +42,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 185f6bdebff9fe1438be6431e77feeaf, type: 3}
-    - {fileID: 21300000, guid: d42564a265f83a94f98d109e5ec51b6d, type: 3}
+    - {fileID: 21300000, guid: b90abc3d9cbc98844bc7fe9f3f75aecc, type: 3}
+    - {fileID: 21300000, guid: 6936376505919b3408dfd5743ef64ce8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
