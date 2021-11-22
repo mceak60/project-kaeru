@@ -97,7 +97,7 @@ public class PlayerDeath : MonoBehaviour
         grapple.preventGrapple = true;
         grapple.cancelGrapple();
         //Play anim
-        //anim.SetBool("IsDying", true);
+        anim.SetBool("IsDying", true);
         //Wait for anim to finish
         yield return new WaitForSeconds(dieTime-0.25f);
         //respawn
