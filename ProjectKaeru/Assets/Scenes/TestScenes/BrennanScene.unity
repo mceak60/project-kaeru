@@ -6735,7 +6735,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287351741}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.45249, y: -0.8790988, z: -10}
+  m_LocalPosition: {x: -29.45249, y: -0.87906635, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1364994705}
@@ -21556,9 +21556,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4173171353726715922, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197224042394294960, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356880346237692426, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363174888737525009, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363174888813568517, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 7363174888813568519, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
       propertyPath: m_Name
       value: Koopa
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363174888813568519, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363174888813568523, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7363174888813568527, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
       propertyPath: m_RootOrder
@@ -21603,6 +21631,10 @@ PrefabInstance:
     - target: {fileID: 7363174888813568527, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363174889674690106, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5a9ca3df09ac75479007fe37ab806e5, type: 3}

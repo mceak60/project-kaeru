@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsGrounded", true);
             }
 
-            if (GetComponent<PlayerCombat>().isAttacking)
+            if (GetComponent<PlayerCombatOLD>().isAttacking)
             {
                 attacking = true;
             }

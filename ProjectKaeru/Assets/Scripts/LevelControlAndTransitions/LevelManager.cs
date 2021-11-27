@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject player;
     private Transform playerTransform;
-    private Health playerHealth;
+    private PlayerHealth playerHealth;
 
     static public string entryPoint = "devSpawn"; // The default entry point when the player first loads in is coded as the one called "spawn" currently
     static public string respawnScene; // The default respawn scene wiill be whichever scene is open when the game starts up
@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
         resetPoint = instance.resetPoints.transform.Find(LevelManager.entryPoint);
         player = Instantiate(playerPrefab, resetPoint.position, Quaternion.identity);
         playerTransform = player.GetComponent<Transform>();
-        playerHealth = player.GetComponent<Health>();
+        playerHealth = player.GetComponent<PlayerHealth>();
 
         CinemachineVirtualCamera vcam = playerCamera.GetComponent<CinemachineVirtualCamera>();
         vcam.Follow = playerTransform;

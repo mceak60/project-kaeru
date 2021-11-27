@@ -15,11 +15,11 @@ public class PlayerDeath : MonoBehaviour
     public Animator anim;
     public float dieTime = 0.5f;
     public float respawnTime = 0.7f;
-    private Health health;
+    private PlayerHealth health;
 
     private void Start()
     {
-        health = GetComponent<Health>();
+        health = GetComponent<PlayerHealth>();
     }
 
     // Respawn the player when they make contact with an object with the death tag
