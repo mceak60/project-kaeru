@@ -15,6 +15,7 @@ TagManager:
   - ResetPowerUp
   - PlayerAttack
   - MovingPlatform
+  - EnemyHitbox
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Grappleable
   - FloorsNWalls
   - IgnoreCollision
-  - 
+  - PlayerHitbox
   - 
   - 
   - 

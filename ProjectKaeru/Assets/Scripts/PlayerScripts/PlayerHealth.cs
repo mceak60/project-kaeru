@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     public int health; // Current health
     public int numHearts; // Maximum health, or the number of heart containers the player currently has
@@ -54,6 +54,7 @@ public class Health : MonoBehaviour
         }
     }
 
+    /*
     // If the player collides with the enemy's hitbox, apply damage and knockback
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -66,7 +67,7 @@ public class Health : MonoBehaviour
                 knockback = true;
                 controller.knockback = true;
                 TakeDamage(1);
-                Debug.Log("Invincible");
+                //Debug.Log("Invincible");
                 playerSprite.color = Color.gray;
             }
         }
@@ -84,11 +85,12 @@ public class Health : MonoBehaviour
                 knockback = true;
                 controller.knockback = true;
                 TakeDamage(1);
-                Debug.Log("Invincible");
+                //Debug.Log(col);
                 playerSprite.color = Color.gray;
             }
         }
     }
+    */
 
     //Display heart containers and current health
     private void DisplayHearts()
@@ -117,7 +119,7 @@ public class Health : MonoBehaviour
         {
             if (iFrames <= 0)
             {
-                Debug.Log("Not invincible");
+                //Debug.Log("Not invincible");
                 invincible = false;
                 iFrames = startIFrames;
                 playerSprite.color = defaultColor;
@@ -171,8 +173,18 @@ public class Health : MonoBehaviour
         invincible = true;
     }
 
-    public bool GetInvisible()
+    public bool GetInvincible()
     {
         return invincible;
+    }
+
+    public void SetKnockback(bool b)
+    {
+        knockback = b;
+    }
+
+    public void SetCollision(Collider2D col)
+    {
+        lastCollision = col;
     }
 }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8954135669736909433}
   - component: {fileID: 5197224042394294960}
   m_Layer: 9
-  m_Name: Hurtbox
-  m_TagString: Enemy
+  m_Name: Hitbox
+  m_TagString: EnemyHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,8 +44,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019187927, y: -0.2863853}
-  m_Size: {x: 1.2405949, y: 1.7898536}
+  m_Offset: {x: -0.03840208, y: -0.2863853}
+  m_Size: {x: 1.2790232, y: 1.7898536}
   m_Direction: 0
 --- !u!1 &7363174888737525009
 GameObject:
@@ -90,11 +90,12 @@ GameObject:
   - component: {fileID: 7363174888813568521}
   - component: {fileID: 7363174888813568520}
   - component: {fileID: 7363174888813568523}
+  - component: {fileID: 4173171353726715922}
   - component: {fileID: 7363174888813568517}
   - component: {fileID: 4321918315596654139}
   m_Layer: 14
   m_Name: Koopa
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,6 +233,32 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!61 &4173171353726715922
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363174888813568519}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1345005, y: 0.008539796}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 1.7}
+    newSize: {x: 1.65, y: 1.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.230999, y: 1.7170796}
+  m_EdgeRadius: 0
 --- !u!114 &7363174888813568517
 MonoBehaviour:
   m_ObjectHideFlags: 0
