@@ -157,7 +157,11 @@ public class PlayerController : MonoBehaviour
                     //...and we're holding a direction then grab the wall
                     if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
                     {
-                        isGrabbing = true;
+						// the first frame the player grabs the wall, set jumping to false (i.e. they landed)_
+						if(!isGrabbing && !wallJump)
+							animator.SetBool("IsJumping", false);
+
+						isGrabbing = true;
 						heavy = false;
                     }
                 }
