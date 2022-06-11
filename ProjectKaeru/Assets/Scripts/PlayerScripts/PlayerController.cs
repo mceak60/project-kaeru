@@ -342,12 +342,10 @@ public class PlayerController : MonoBehaviour
 						}
 					}
 
-                    // *** THIS DOESNT ACTUALLY WORK SO I COMMENTED IT OUT***
-                    // it always stops the player completely no matter what attackspeed is...
 					//If we're on the ground we reduce our speed while attacking
 					if (attack && m_Grounded)
 					{
-						//move *= m_AttackSpeed;
+						move *= m_AttackSpeed;
 					}
 
 					// Move the character by finding the target velocity

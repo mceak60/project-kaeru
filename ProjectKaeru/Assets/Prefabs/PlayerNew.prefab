@@ -297,7 +297,7 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 895446793271014313}
   m_CeilingCheck: {fileID: 895446794362688460}
   m_CrouchDisableCollider: {fileID: 895446792800387138}
-  m_AttackSpeed: 0.01
+  m_AttackSpeed: 0.528
   dashSpeed: 18
   fallMultiplier: 4
   lowJumpMultiplier: 10

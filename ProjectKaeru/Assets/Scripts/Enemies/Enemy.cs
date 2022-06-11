@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    //Update the enemies damage, play a stagger animation, and kill them if they're health drops below 0
+    //Update the enemies damage, play a stagger animation, and kill them if their health drops below 0
     public void TakeDamage(int damage, Rigidbody2D rb)
     {
         currentHealth -= damage;
